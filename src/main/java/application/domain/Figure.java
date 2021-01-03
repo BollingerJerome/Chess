@@ -14,6 +14,13 @@ public class Figure {
 	private boolean alive;
 	private int[] position;
 	
+	public void move(int posX, int posY) {
+		int[] newPosition = new int[2];
+		newPosition[0] = posX;
+		newPosition[1] = posY;
+		this.setPosition(newPosition);
+	}
+	
 	
 	public String getName() {
 		return name;

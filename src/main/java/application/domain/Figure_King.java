@@ -8,12 +8,7 @@ public class Figure_King extends Figure implements Movement {
 		super(name, id, alive, position);
 	}
 
-	public void move(int posX, int posY) {
-		int[] newPosition = new int[2];
-		newPosition[0] = posX;
-		newPosition[1] = posY;
-		this.setPosition(newPosition);
-	}
+	
 
 	public int[][] movementOption() {
 		
