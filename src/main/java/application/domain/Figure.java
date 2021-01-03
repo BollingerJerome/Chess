@@ -2,17 +2,20 @@ package application.domain;
 
 public class Figure {
 	
-	public Figure(String name, String id, boolean alive, int[] position) {
+	public Figure(String name, String id, boolean alive, int[] position, boolean white) {
 		super();
 		this.name = name;
 		this.id = id;
 		this.alive = alive;
 		this.position = position;
+		this.white = white;
 	}
+	
 	private String name;
 	private String id;
 	private boolean alive;
 	private int[] position;
+	private boolean white;
 	
 	public void move(int posX, int posY) {
 		int[] newPosition = new int[2];

@@ -4,8 +4,8 @@ public class Figure_King extends Figure implements Movement {
 
 
 
-	public Figure_King(String name, String id, boolean alive, int[] position) {
-		super(name, id, alive, position);
+	public Figure_King(String name, String id, boolean alive, int[] position, boolean white) {
+		super(name, id, alive, position, white);
 	}
 
 	
