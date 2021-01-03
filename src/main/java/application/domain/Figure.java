@@ -1,6 +1,6 @@
 package application.domain;
 
-public class Figure {
+public abstract class Figure {
 	
 	public Figure(String name, String id, boolean alive, int[] position, boolean white) {
 		super();
@@ -48,6 +48,16 @@ public class Figure {
 	}
 	public void setPosition(int[] position) {
 		this.position = position;
+	}
+
+
+	public boolean isWhite() {
+		return white;
+	}
+
+
+	public void setWhite(boolean white) {
+		this.white = white;
 	}
 
 }

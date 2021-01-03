@@ -3,7 +3,7 @@ package application.domain;
 public interface Movement {
 
 	
-	public int[][] movementOption();
+	public boolean movementOption(int x, int y);
 	
 	
 }

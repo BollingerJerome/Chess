@@ -7,28 +7,36 @@ public class Figure_Knight extends Figure implements Movement {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int[][] movementOption() {
+	
 
-
-		int x = this.getPosition()[0];
-		int y = this.getPosition()[1];
-		int[][] optionArray = new int[8][2];
-		int counter = 0;
+	public boolean movementOption(int x, int y) {
 		
-		if(x+2<8) {
-			if(y+1<8) {
-				optionArray[counter][0] = x+1;
-				optionArray[counter][1] = y;
-				counter++;
+		int thisX = this.getPosition()[0];
+		int thisY = this.getPosition()[1];
+		
+		
+		if(x - thisX == 2 || thisX - x == 2) {
+			if(y-thisY == 1 || thisY -y == 1) {
+				return true;
 			}
-			else if(y-1>=0){
-				
+			else {
+				return false;
 			}
+		}
+		else if(y-thisY == 2 || thisY -y == 2) {
+			if(x - thisX == 1 || thisX - x == 1) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
 		}
 		
 		
 		
-		return optionArray;
 	}
 
 }

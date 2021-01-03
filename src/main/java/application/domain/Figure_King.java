@@ -10,67 +10,33 @@ public class Figure_King extends Figure implements Movement {
 
 	
 
-	public int[][] movementOption() {
+	public boolean movementOption(int x, int y) {
 		
-		int x = this.getPosition()[0];
-		int y = this.getPosition()[1];
-		int[][] optionArray = new int[8][2];
-		int counter = 0;
+		int thisX = this.getPosition()[0]; 
+		int thisY = this.getPosition()[1];
 		
-		boolean left = x>0;
-		boolean right = x<7;
-		boolean front = y>0;
-		boolean back = y<7;
-		
-		if(left) {
-			optionArray[counter][0] = x--;
-			optionArray[counter][1] = y;
-			counter++;
-			
-			if(back) {
-				optionArray[counter][0] = x--;
-				optionArray[counter][1] = y--;
-				counter++;
+		if(x-thisX == 1 || x-thisX == -1) {
+			if(y-thisY == 1 || y-thisY == -1 || y-thisY == 0) {
+				return true;
 			}
-			else if(front) {
-				optionArray[counter][0] = x--;
-				optionArray[counter][1] = y++;
-				counter++;
+			else {
+				return false;
 			}
-			
-			
 		}
-		else if(right) {
-			optionArray[counter][0] = x++;
-			optionArray[counter][1] = y;
-			
-			if(back) {
-				optionArray[counter][0] = x++;
-				optionArray[counter][1] = y--;
-				counter++;
+		else if(x-thisX == 0){
+			if(y-thisY == 1 || y-thisY == -1) {
+				return true;
 			}
-			else if(front) {
-				optionArray[counter][0] = x++;
-				optionArray[counter][1] = y++;
-				counter++;
+			else {
+				return false;
 			}
-			
+		}
+		else {
+			return false;
 		}
 		
-		if(back) {
-			optionArray[counter][0] = x;
-			optionArray[counter][1] = y--;
-			counter++;
-		}
-		
-		if(front) {
-			optionArray[counter][0] = x;
-			optionArray[counter][1] = y++;
-			counter++;
-		}
-		
-		return optionArray;
 
 	}
+
 
 }

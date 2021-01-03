@@ -7,65 +7,25 @@ public class Figure_Queen extends Figure implements Movement {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int[][] movementOption() {
-		int x = this.getPosition()[0];
-		int y = this.getPosition()[1];
-		int[][] optionArray = new int[16][2];
-		int counter = 0;
 
-		for(int j = 0; j<8; j++) {
+	public boolean movementOption(int x, int y) {
+		int thisX = this.getPosition()[0];
+		int thisY = this.getPosition()[1];
 
-			if(x+j < 8 ) {
-				optionArray[counter][0] = x+j;
-				optionArray[counter][1] = y;
-				counter++;
+		if(thisY == y && thisX != x) {
+			return true;
+		}
+		else if(thisX == x && thisY != y) {
+			return true;
+		}
+		else {		
+			if((thisX -x == thisY - y || thisX -x == -(thisY - y)) && thisY != y && thisX != x) {
+				return true;
 			}
-
-			if(x-j >= 0) {
-				optionArray[counter][0] = x-j;
-				optionArray[counter][1] = y;
-				counter++;
+			else {
+				return false;
 			}
-
-			if(y+j >= 0) {
-				optionArray[counter][0] = x;
-				optionArray[counter][1] = y-j;
-				counter++;
-			}
-
-			if(y-j < 8) {
-				optionArray[counter][0] = x;
-				optionArray[counter][1] = y+j;
-				counter++;
-			}
-
-			if(x+j < 8 && y+j < 8) {
-				optionArray[counter][0] = x+j;
-				optionArray[counter][1] = y+j;
-				counter++;
-			}
-
-			if(x-j >= 0 && y+j < 8) {
-				optionArray[counter][0] = x-j;
-				optionArray[counter][1] = y+j;
-				counter++;
-			}
-
-			if(x+j < 8 && y+j >= 0) {
-				optionArray[counter][0] = x+j;
-				optionArray[counter][1] = y-j;
-				counter++;
-			}
-
-			if(x-j >= 0 && y+j >= 0) {
-				optionArray[counter][0] = x-j;
-				optionArray[counter][1] = y-j;
-				counter++;
-			}
-
 		}
 
-		return optionArray;
 	}
-
 }

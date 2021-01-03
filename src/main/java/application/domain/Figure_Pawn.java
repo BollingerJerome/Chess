@@ -8,18 +8,28 @@ public class Figure_Pawn extends Figure implements Movement {
 	}
 
 
-	public int[][] movementOption() {
+
+
+	public boolean movementOption(int x, int y) {
+		int thisY = this.getPosition()[1];
 		
-		int x = this.getPosition()[0];
-		int y = this.getPosition()[1];
-		int[][] movementOption = new int[1][2];
-		
-		if(y < 7) {
-			movementOption[0][0] = x;
-			movementOption[0][0] = y+1;
+		if(this.isWhite()) {
+			if(y-thisY == 1) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
-		
-		return movementOption;
+		else {
+			if(thisY-y == 1) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
 	}
 
 }
