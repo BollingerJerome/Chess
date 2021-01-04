@@ -2,14 +2,15 @@ package application.domain;
 
 public class Figure_Rook extends Figure implements Movement {
 
-	public Figure_Rook(String name, String id, boolean alive, int[] position, boolean white) {
-		super(name, id, alive, position, white);
-		// TODO Auto-generated constructor stub
+	
+
+	public Figure_Rook(String name, String id, boolean alive, int x, int y, boolean white) {
+		super(name, id, alive, x, y, white);
 	}
 
 	public boolean movementOption(int x, int y) {
-		int thisX = this.getPosition()[0];
-		int thisY = this.getPosition()[1];
+		int thisX = this.getX();
+		int thisY = this.getY();
 		
 		if(thisY == y && thisX != x) {
 			return true;

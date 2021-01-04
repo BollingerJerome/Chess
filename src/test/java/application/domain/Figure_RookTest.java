@@ -8,10 +8,8 @@ public class Figure_RookTest {
 
 	@Test
 	public void testMovementOption() {
-		int[] position = new int[2];
-		position[0] = 4;
-		position[1] = 4;
-		Figure_Rook rook = new Figure_Rook("rook", "0", true, position, true);
+
+		Figure_Rook rook = new Figure_Rook("rook", "0", true, 4, 4, true);
 		
 		assertTrue(rook.movementOption(4, 7));
 		assertTrue(rook.movementOption(4, 1));

@@ -1,8 +1,12 @@
 package application;
 
+import application.domain.Board;
+import application.domain.DomainController;
 import application.presentation.Controller;
 import application.presentation.GameField;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class Chess_Application extends Application{
@@ -12,11 +16,22 @@ public class Chess_Application extends Application{
 		
 	}
 	
+	private Board board;
+	private DomainController domainController;
+	private Controller controller;
+	private GameField gameField;
+
+	
+	
 	@Override	
 	public void start(Stage primaryStage) {
 		
-		GameField gameField = new GameField(60);
-		Controller controller = new Controller(gameField);
+		this.board = new Board();
+		this.domainController = new DomainController(board);
+		this.controller = new Controller(domainController, gameField);
+		this.gameField = new GameField(controller, 60);
+		
+		this.controller.setGameField(gameField);
 		
 		
 		

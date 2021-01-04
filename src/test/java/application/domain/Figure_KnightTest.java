@@ -12,7 +12,7 @@ public class Figure_KnightTest {
 		int[] position = new int[2];
 		position[0] = 4;
 		position[1] = 4;
-		Figure_Knight knight = new Figure_Knight("knight", "0", true, position, true);
+		Figure_Knight knight = new Figure_Knight("knight", "0", true, 4, 4, true);
 		
 		assertTrue(knight.movementOption(5, 6));
 		assertTrue(knight.movementOption(5, 2));

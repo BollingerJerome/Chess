@@ -9,11 +9,8 @@ public class Figure_QueenTest {
 	@Test
 	public void testMovementOption() {
 		
-		
-		int[] position = new int[2];
-		position[0] = 4;
-		position[1] = 4;
-		Figure_Queen queen = new Figure_Queen("queen", "0", true, position, true);
+
+		Figure_Queen queen = new Figure_Queen("queen", "0", true, 4, 4, true);
 		
 		assertTrue(queen.movementOption(4, 7));
 		assertTrue(queen.movementOption(4, 1));

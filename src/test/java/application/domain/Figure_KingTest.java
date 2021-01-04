@@ -12,10 +12,8 @@ public class Figure_KingTest {
 	public void testMovementOption() {
 		
 		//setting a King on position 4,4
-		int[] position = new int[2];
-		position[0] = 4;
-		position[1] = 4;
-		Figure_King king = new Figure_King("king", "0", true, position, true);
+
+		Figure_King king = new Figure_King("king", "0", true, 4, 4, true);
 		
 		//one around the king
 		assertTrue(king.movementOption(3, 3));
@@ -35,9 +33,8 @@ public class Figure_KingTest {
 		assertFalse(king.movementOption(3, 8));
 		
 		//the edge
-		position[0] = 6;
-		position[1] = 6;
-		king = new Figure_King("king", "0", true, position, true);
+
+		king = new Figure_King("king", "0", true, 4, 4, true);
 		
 		assertTrue(king.movementOption(7, 7));
 		

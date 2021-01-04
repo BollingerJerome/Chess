@@ -11,10 +11,7 @@ public class Figure_BishopTest {
 	@Test
 	public void testMovementOption() {
 
-		int[] position = new int[2];
-		position[0] = 4;
-		position[1] = 4;
-		Figure_Bishop bishop = new Figure_Bishop("bishop", "0", true, position, true);
+		Figure_Bishop bishop = new Figure_Bishop("bishop", "0", true, 4, 4, true);
 		
 		assertTrue(bishop.movementOption(3, 3));
 		assertTrue(bishop.movementOption(3, 5));
