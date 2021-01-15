@@ -1,7 +1,6 @@
 package application.presentation;
 
-import application.domain.Board;
-import application.domain.Figure;
+
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -12,33 +11,46 @@ import javafx.scene.shape.Rectangle;
 public class GameField {
 
 	public GameField(Controller controller, float sideLength) {
+		this.borderPane = new BorderPane();
 		this.sideLength = sideLength;
-		this.scene = drawScene();
 		this.controller = controller;
+		this.chessGrid = new ChessGrid(controller.getDomainController().getBoard(), sideLength);
+		this.scene = drawScene();
 		this.drawFigures();
 		this.eventHandler = getEventHandler();
 		this.addMovementOption();
+		
 	}
 
 	private BorderPane borderPane;
 	private Controller controller;
 	private Scene scene;
-	private Rectangle[][] rectangle;
+	private ChessGrid chessGrid;
 	private FigureVisual[] FigureObjects;
 	private float sideLength;
 	private EventHandler<MouseEvent> eventHandler;
+	
 
 	
 	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler
 		return new EventHandler<MouseEvent>() {				
 			public void handle(MouseEvent event) {
-				colorBoardNormal();
-				colorMovementRectangles(event.getSource());									//updating the field 
+				chessGrid.colorBoardNormal();
+				if(event.getSource() instanceof FigureVisual) {
+					colorMovementRectangles(event.getSource());
+				}
+				else if(event.getSource() instanceof Rectangle){
+					
+				}
 			}
 		};
 	};
 	
 	
+	/*public void moveFigure(Object figure) {
+		FigureVisual source = (FigureVisual) figure;
+		source.getFigure().move(posX, posY);
+	}*/
 	
 	public void colorMovementRectangles(Object figure) {
 		
@@ -46,8 +58,9 @@ public class GameField {
 		
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
-				if(source.getFigure().movementOption(i, j) && !controller.getDomainController().getBoard().getBoard()[i][j].isOccupied()) {
-					rectangle[i][j].setFill(Color.YELLOW);
+				if(source.getFigure().movementOption(i, j) && !chessGrid.getBoard().getBoard()[i][j].isOccupied()) {
+					chessGrid.getRectangles()[i][j].setFill(Color.YELLOW);
+					chessGrid.getRectangles()[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 				}
 			}
 		}
@@ -62,51 +75,27 @@ public class GameField {
 	
 	public void drawFigures() {
 		FigureObjects = new FigureVisual[16];
-		Board board = controller.getDomainController().getBoard();
 		for(int i = 0; i<16; i++) {
 
-			FigureObjects[i] = new FigureVisual(60*board.getFigures()[i].getX(), 60*board.getFigures()[i].getY(), 60, 60, board.getFigures()[i]);
+			FigureObjects[i] = new FigureVisual(60*chessGrid.getBoard().getFigures()[i].getX(), 60*chessGrid.getBoard().getFigures()[i].getY(), 60, 60, chessGrid.getBoard().getFigures()[i]);
 			FigureObjects[i].setArcHeight(80);
 			FigureObjects[i].setArcWidth(80);
 			FigureObjects[i].setFill(Color.BLUE);
 			borderPane.getChildren().add(FigureObjects[i]);
 		}
 	}
+	
 
 
-	public void colorBoardNormal() {
-		for(int i = 0; i<64; i++) {
-			int x = i%8;
-			int y = i/8;
-
-			if((x + y)%2 == 0) {
-				rectangle[x][y].setFill(Color.BLACK);
-			}
-			else {
-				rectangle[x][y].setFill(Color.WHITE);
-			
-		}}
-	}
+	
 	
 	public Scene drawScene() {
 
-		this.borderPane = new BorderPane();
-		this.rectangle = new Rectangle[8][8];
-
-		for(int i = 0; i<64; i++) {
-			int x = i%8;
-			int y = i/8;
-
-			rectangle[x][y] = new Rectangle(sideLength * x, sideLength * y, sideLength, sideLength);
-
-			if((x + y)%2 == 0) {
-				rectangle[x][y].setFill(Color.BLACK);
-			}
-			else {
-				rectangle[x][y].setFill(Color.WHITE);
-			}
-
-			borderPane.getChildren().add(rectangle[x][y]);
+		
+		chessGrid.colorBoardNormal();
+		System.out.println("drawing");
+		for(int i = 0; i < 64; i++) {
+			borderPane.getChildren().add(chessGrid.getRectangles()[i%8][i/8]);
 		}
 		return new Scene(borderPane);
 	}
@@ -117,6 +106,36 @@ public class GameField {
 
 	public void setScene(Scene scene) {
 		this.scene = scene;
+	}
+
+
+	public Controller getController() {
+		return controller;
+	}
+
+
+	public void setController(Controller controller) {
+		this.controller = controller;
+	}
+
+
+	public ChessGrid getChessGrid() {
+		return chessGrid;
+	}
+
+
+	public void setChessGrid(ChessGrid chessGrid) {
+		this.chessGrid = chessGrid;
+	}
+
+
+	public float getSideLength() {
+		return sideLength;
+	}
+
+
+	public void setSideLength(float sideLength) {
+		this.sideLength = sideLength;
 	}
 
 

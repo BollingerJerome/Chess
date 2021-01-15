@@ -10,6 +10,7 @@ public class Tile {
 		this.y = y;
 		this.occupied = occupied;
 	}
+	
 	private int x,y;
 	private boolean occupied;
 	public int getX() {
