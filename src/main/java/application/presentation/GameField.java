@@ -87,6 +87,7 @@ public class GameField {
 
 
 	public void drawTiles() {
+
 		chessGrid.colorBoardNormal();
 		System.out.println("drawing");
 		for(int i = 0; i < 64; i++) {

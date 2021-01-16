@@ -6,14 +6,12 @@ import javafx.scene.shape.Rectangle;
 
 public class ChessGrid{
 
-	
-	
 	public ChessGrid(Board board, float sideLength) {
 		
 		this.board = board;
 		this.rectangles = new Rectangle[8][8];
-		initializeRectangles();
 		this.sideLength = sideLength;
+		this.initializeRectangles();
 	}
 	
 	private Board board;
