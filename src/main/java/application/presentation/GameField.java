@@ -15,7 +15,7 @@ public class GameField {
 		this.sideLength = sideLength;
 		this.controller = controller;
 		this.chessGrid = new ChessGrid(controller.getDomainController().getBoard(), sideLength);
-		this.scene = drawScene();
+		this.drawTiles();
 		this.drawFigures();
 		this.eventHandler = getEventHandler();
 		this.addMovementOption();
@@ -24,7 +24,6 @@ public class GameField {
 
 	private BorderPane borderPane;
 	private Controller controller;
-	private Scene scene;
 	private ChessGrid chessGrid;
 	private FigureVisual[] FigureObjects;
 	private float sideLength;
@@ -59,8 +58,8 @@ public class GameField {
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
 				if(source.getFigure().movementOption(i, j) && !chessGrid.getBoard().getBoard()[i][j].isOccupied()) {
-					chessGrid.getRectangles()[i][j].setFill(Color.YELLOW);
-					chessGrid.getRectangles()[i][j].addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+					chessGrid.getRectangles(i, j).setFill(Color.YELLOW);
+					chessGrid.getRectangles(i, j).addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 				}
 			}
 		}
@@ -87,27 +86,22 @@ public class GameField {
 	
 
 
-	
-	
-	public Scene drawScene() {
-
-		
+	public void drawTiles() {
 		chessGrid.colorBoardNormal();
 		System.out.println("drawing");
 		for(int i = 0; i < 64; i++) {
-			borderPane.getChildren().add(chessGrid.getRectangles()[i%8][i/8]);
+			borderPane.getChildren().add(chessGrid.getRectangles(i%8, i/8));
 		}
-		return new Scene(borderPane);
+		Rectangle test = new Rectangle(0, 0, 100, 100);
+		test.setFill(Color.YELLOW);
+		borderPane.getChildren().add(test);
 	}
+	
+	
 
 	public Scene getScene() {
-		return scene;
+		return new Scene(borderPane);
 	}
-
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
-
 
 	public Controller getController() {
 		return controller;

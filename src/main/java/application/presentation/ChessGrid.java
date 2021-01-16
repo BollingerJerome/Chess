@@ -20,7 +20,7 @@ public class ChessGrid{
 	private Rectangle[][] rectangles;
 	private float sideLength;
 	
-	private void initializeRectangles() {
+	public void initializeRectangles() {
 		
 		for(int i = 0; i<64; i++) {
 			int x = i%8;
@@ -37,7 +37,6 @@ public class ChessGrid{
 
 			if((x + y)%2 == 0) {
 				rectangles[x][y].setFill(Color.BLACK);
-				System.out.println("Black");
 			}
 			else {
 				rectangles[x][y].setFill(Color.WHITE);
@@ -45,8 +44,8 @@ public class ChessGrid{
 		}
 	}
 
-	public Rectangle[][] getRectangles() {
-		return rectangles;
+	public Rectangle getRectangles(int x, int y) {
+		return rectangles[x][y];
 	}
 
 	public void setRectangles(Rectangle[][] rectangles) {

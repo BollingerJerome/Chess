@@ -7,7 +7,6 @@ public class Controller {
 
 
 	public Controller(DomainController domainController, GameField gameField) {
-		super();
 		this.domainController = domainController;
 		this.gameField = gameField;
 	}
