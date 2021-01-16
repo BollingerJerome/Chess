@@ -10,6 +10,11 @@ public class FigureVisual extends javafx.scene.shape.Rectangle {
 		super(x, y, width, height);
 		this.figure = figure;
 	}
+	
+	public void update(float sideLenght) {
+		this.setX(figure.getX() * sideLenght);
+		this.setY(figure.getY() * sideLenght);
+	}
 
 	private Figure figure;
 	

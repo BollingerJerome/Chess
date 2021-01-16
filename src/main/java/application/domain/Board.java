@@ -15,23 +15,40 @@ public class Board {
 	private Figure[] figures;
 	
 	public void setFiguresToStartPosition() {
-		
+		int number = 0;
 		//white setup
-		figures[0] = new Figure_Rook("Rook_white", "00", true, 0, 0, true);
-		figures[1] = new Figure_Knight("King_white", "00", true, 1, 0, true);
-		figures[2] = new Figure_Bishop("King_white", "00", true, 2, 0, true);
-		figures[3] = new Figure_King("King_white", "00", true, 3, 0, true);
-		figures[4] = new Figure_Queen("King_white", "00", true, 4, 0, true);
-		figures[5] = new Figure_Bishop("King_white", "00", true, 5, 0, true);
-		figures[6] = new Figure_Knight("King_white", "00", true, 6, 0, true);
-		figures[7] = new Figure_Rook("King_white", "00", true, 7, 0, true);
+		figures[number++] = new Figure_Rook("Rook_white", "00", true, 0, 0, true);
+		figures[number++] = new Figure_Knight("King_white", "00", true, 1, 0, true);
+		figures[number++] = new Figure_Bishop("King_white", "00", true, 2, 0, true);
+		figures[number++] = new Figure_King("King_white", "00", true, 3, 0, true);
+		figures[number++] = new Figure_Queen("King_white", "00", true, 4, 0, true);
+		figures[number++] = new Figure_Bishop("King_white", "00", true, 5, 0, true);
+		figures[number++] = new Figure_Knight("King_white", "00", true, 6, 0, true);
+		figures[number++] = new Figure_Rook("King_white", "00", true, 7, 0, true);
 		
-		for(int i = 8; i<16; i++) {
-			figures[i] = new Figure_Pawn("King_white", "00", true, i-8, 1, true);
+		
+		figures[number++] = new Figure_Rook("Rook_white", "00", true, 0, 7, false);
+		figures[number++] = new Figure_Knight("King_white", "00", true, 1, 7, false);
+		figures[number++] = new Figure_Bishop("King_white", "00", true, 2, 7, false);
+		figures[number++] = new Figure_King("King_white", "00", true, 3, 7, false);
+		figures[number++] = new Figure_Queen("King_white", "00", true, 4, 7, false);
+		figures[number++] = new Figure_Bishop("King_white", "00", true, 5, 7, false);
+		figures[number++] = new Figure_Knight("King_white", "00", true, 6, 7, false);
+		figures[number++] = new Figure_Rook("King_white", "00", true, 7, 7, false);
+		
+		for(int i = 0; i<8; i++) {
+			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 1, true);
+		}
+		
+		for(int i = 0; i<8; i++) {
+			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 6, false);
 		}
 	}
 	
 	public void updateOccupation() {
+		for(int i = 0; i<64; i++) {
+			tileField[i%8][i/8].setOccupied(false);
+		}
 		for(int i = 0; i<32; i++) {
 			if(figures[i] != null) {
 				if(figures[i].isAlive()) {
