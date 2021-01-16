@@ -34,7 +34,7 @@ public class Chess_Application extends Application{
 		this.controller = new Controller(chessBoardView, domainController);
 		this.chessBoardView = new ChessBoardView(controller);
 		
-		
+		controller.setChessBoardView(chessBoardView);
 		chessBoardView.addBoardTiles();
 		
 		

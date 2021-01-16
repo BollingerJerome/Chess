@@ -11,6 +11,7 @@ public class ChessBoardView {
 
 	public ChessBoardView(Controller controller) {
 		this.controller = controller;
+		this.borderPane = new BorderPane();
 	}
 
 	
@@ -42,11 +43,8 @@ public class ChessBoardView {
 	}
 	
 	public Scene showScene() {
-		
-		
-		
-		
-		return new Scene(borderPane);
+		this.addBoardTiles();
+		return new Scene(this.borderPane);
 	}
 	
 	
