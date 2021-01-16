@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import application.domain.FigureModels.Figure_Rook;
+
 public class Figure_RookTest {
 
 	@Test

@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import application.domain.FigureModels.Figure_King;
+
 public class Figure_KingTest {
 
 	@Test

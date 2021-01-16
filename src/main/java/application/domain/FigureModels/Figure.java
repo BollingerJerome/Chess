@@ -1,4 +1,4 @@
-package application.domain;
+package application.domain.FigureModels;
 
 public abstract class Figure implements Movement{
 	

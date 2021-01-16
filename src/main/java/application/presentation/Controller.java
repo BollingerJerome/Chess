@@ -4,23 +4,16 @@ import application.domain.DomainController;
 
 public class Controller {
 
+	
+	
+	public Controller(ChessBoardView chessBoardView, DomainController domainController) {
 
-
-	public Controller(DomainController domainController, GameField gameField) {
+		this.chessBoardView = chessBoardView;
 		this.domainController = domainController;
-		this.gameField = gameField;
 	}
 
+	private ChessBoardView chessBoardView;
 	private DomainController domainController;
-	private GameField gameField;
-
-	public GameField getGameField() {
-		return gameField;
-	}
-
-	public void setGameField(GameField gameField) {
-		this.gameField = gameField;
-	}
 
 	public DomainController getDomainController() {
 		return domainController;
@@ -29,7 +22,13 @@ public class Controller {
 	public void setDomainController(DomainController domainController) {
 		this.domainController = domainController;
 	}
-	
-	
+
+	public ChessBoardView getChessBoardView() {
+		return chessBoardView;
+	}
+
+	public void setChessBoardView(ChessBoardView chessBoardView) {
+		this.chessBoardView = chessBoardView;
+	}
 
 }

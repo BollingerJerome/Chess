@@ -2,8 +2,9 @@ package application;
 
 import application.domain.Board;
 import application.domain.DomainController;
+import application.domain.GameFlowController;
+import application.presentation.ChessBoardView;
 import application.presentation.Controller;
-import application.presentation.GameField;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -19,26 +20,27 @@ public class Chess_Application extends Application{
 	private Board board;
 	private DomainController domainController;
 	private Controller controller;
-	private GameField gameField;
-
+	private GameFlowController gameFlowController;
+	private ChessBoardView chessBoardView;
 	
 	
 	@Override	
 	public void start(Stage primaryStage) {
 		
-		this.board = new Board();
-		this.domainController = new DomainController(board);
-		this.controller = new Controller(domainController, gameField);
-		this.gameField = new GameField(controller, 60);
+		this.gameFlowController = new GameFlowController();
+
 		
-		this.controller.setGameField(gameField);
+		this.domainController = new DomainController(gameFlowController);
+		this.controller = new Controller(chessBoardView, domainController);
+		this.chessBoardView = new ChessBoardView(controller);
 		
 		
+		chessBoardView.addBoardTiles();
 		
 		
 		try {
 			
-			primaryStage.setScene(controller.getGameField().getScene());
+			primaryStage.setScene(controller.getChessBoardView().showScene());
 			primaryStage.setTitle("Chess");
 			primaryStage.show();
 

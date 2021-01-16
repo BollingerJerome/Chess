@@ -1,4 +1,5 @@
-package application.domain;
+package application.domain.FigureModels;
+import application.domain.FigureModels.Movement;
 
 public class Figure_Rook extends Figure implements Movement {
 

@@ -4,20 +4,21 @@ public class DomainController {
 
 	
 	
-	public DomainController(Board board) {
-		this.board = board;
+	public DomainController(GameFlowController gameFlowController) {
+		this.gameFlowController = gameFlowController;
 	}
 
-	private Board board;
+	private GameFlowController gameFlowController;
 
-	public Board getBoard() {
-		return board;
+	public GameFlowController getGameFlowController() {
+		return gameFlowController;
 	}
 
-	public void setBoard(Board board) {
-		this.board = board;
+	public void setGameFlowController(GameFlowController gameFlowController) {
+		this.gameFlowController = gameFlowController;
 	}
-	
+
+
 	
 	
 

@@ -1,4 +1,4 @@
-package application.domain;
+package application.domain.FigureModels;
 
 public class Figure_King extends Figure implements Movement {
 
