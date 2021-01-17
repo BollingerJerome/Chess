@@ -7,6 +7,8 @@ import application.domain.FigureModels.Figure_Knight;
 import application.domain.FigureModels.Figure_Pawn;
 import application.domain.FigureModels.Figure_Queen;
 import application.domain.FigureModels.Figure_Rook;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class GameFlowController {
 
@@ -17,7 +19,7 @@ public class GameFlowController {
 	
 	private Figure[] figures;
 	private Board board;
-	
+
 	private int round;
 	private int state;
 	
@@ -45,7 +47,7 @@ public class GameFlowController {
 	public void generateFigures() {
 		figures = new Figure[32];
 		int number = 0;
-		//white setup
+		
 		figures[number++] = new Figure_Rook("Rook_white", "00", true, 0, 0, true);
 		figures[number++] = new Figure_Knight("King_white", "00", true, 1, 0, true);
 		figures[number++] = new Figure_Bishop("King_white", "00", true, 2, 0, true);
@@ -67,11 +69,9 @@ public class GameFlowController {
 		
 		for(int i = 0; i<8; i++) {
 			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 1, true);
-		}
-		
-		for(int i = 0; i<8; i++) {
 			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 6, false);
 		}
+		
 	}
 
 
