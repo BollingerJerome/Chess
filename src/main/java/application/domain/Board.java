@@ -14,6 +14,16 @@ public class Board {
 	private double sideLength;
 	
 	
+	public boolean[][] getOccupation(){
+		boolean[][] occupation = new boolean[8][8];
+		for(int k = 0; k<8; k++) {
+			for(int j = 0; j<8; j++) {
+				occupation[k][j] = getTile(k, j).isOccupied();
+			}
+		}
+		return occupation;
+	}
+	
 	public void initializeTiles() {
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {

@@ -31,6 +31,13 @@ public class GameFlowController {
 		updateOccupation();
 		
 	}
+	
+	public void turn(Figure figure, int x, int y) {
+		if(!board.getTile(x, y).isOccupied()) {
+			figure.move(x, y);
+			updateOccupation();
+		}
+	}
 		
 	
 	public void updateOccupation() {
