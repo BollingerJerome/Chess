@@ -14,19 +14,17 @@ public class GameFlowController {
 
 	public GameFlowController() {
 		board = new Board(60);
+		
 		start();
 	}
 	
 	private Figure[] figures;
 	private Board board;
-
-	private int round;
-	private int state;
+	private TurnModel turnModel;
 	
 	public void start() {
-		round = 0;
-		state = 0;
 		
+		turnModel = new TurnModel();
 		generateFigures();
 		updateOccupation();
 		
@@ -35,6 +33,7 @@ public class GameFlowController {
 	public void turn(Figure figure, int x, int y) {
 		if(!board.getTile(x, y).isOccupied()) {
 			figure.move(x, y);
+			turnModel.updateOne();
 			updateOccupation();
 		}
 	}
@@ -102,23 +101,12 @@ public class GameFlowController {
 	}
 
 
-	public int getRound() {
-		return round;
+	public TurnModel getTurnModel() {
+		return turnModel;
 	}
 
-
-	public void setRound(int round) {
-		this.round = round;
-	}
-
-
-	public int getState() {
-		return state;
-	}
-
-
-	public void setState(int state) {
-		this.state = state;
+	public void setTurnModel(TurnModel turnModel) {
+		this.turnModel = turnModel;
 	}
 
 }

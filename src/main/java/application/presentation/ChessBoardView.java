@@ -30,6 +30,30 @@ public class ChessBoardView {
 	private EventHandler<MouseEvent> tileEeventHandler;
 	private FigureVisual last;
 
+	
+	public void updateFigureEvents() {
+		boolean isWhiteTurn = controller.getDomainController().getTurnModel().isWhiteTurn();
+		for(FigureVisual figures : figureVisual) {
+			if(figures.getFigure().isWhite()) {
+				if(isWhiteTurn) {
+					figures.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+				}
+				else {
+					figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+				}
+			}
+			else {
+				if(isWhiteTurn) {
+					figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+				}
+				else {
+					figures.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+				}
+			}
+		}
+	}
+	
+	
 	public void colorBoardTilesToNormal() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();
 		Tile[][] tile = board.getTileField();
@@ -79,12 +103,13 @@ public class ChessBoardView {
 			}
 			figureVisual[counter].setArcHeight(sideLength);
 			figureVisual[counter].setArcWidth(sideLength);
-			figureVisual[counter].addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
+			
 			borderPane.getChildren().add(figureVisual[counter]);
 			figureVisual[counter].getName().setMouseTransparent(true);
 			borderPane.getChildren().add(figureVisual[counter].getName());
 			counter++;
 		}
+		updateFigureEvents();
 	}
 
 	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler clicking on figure
@@ -97,6 +122,7 @@ public class ChessBoardView {
 				showPossibleTurns(figureVisual.getFigure());
 				showPossiblePrey(figureVisual.getFigure());
 				updateFigures();
+				updateFigureEvents();
 
 			}
 		};
@@ -114,6 +140,7 @@ public class ChessBoardView {
 								controller.getDomainController().getGameFlowController().turn(last.getFigure(), i%8, i/8);
 								colorBoardTilesToNormal();
 								updateFigures();
+								updateFigureEvents();
 								last = null;
 							}
 
