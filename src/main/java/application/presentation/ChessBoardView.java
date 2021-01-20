@@ -3,6 +3,7 @@ package application.presentation;
 import application.domain.Board;
 import application.domain.Tile;
 import application.domain.FigureModels.Figure;
+import application.domain.FigureModels.Figure_Bishop;
 import application.domain.FigureModels.Figure_Rook;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -69,11 +70,19 @@ public class ChessBoardView {
 		double sideLength = controller.getDomainController().getGameFlowController().getBoard().getSideLength();
 		for(Figure figures : controller.getDomainController().getGameFlowController().getFigures()) {
 			figureVisual[counter] = new FigureVisual(figures.getX(), figures.getY(), sideLength, figures);
-			figureVisual[counter].setFill(Color.BLUE);
+			
+			if(figureVisual[counter].getFigure().isWhite()) {
+				figureVisual[counter].setFill(Color.LIGHTGREEN);
+			}
+			else {
+				figureVisual[counter].setFill(Color.DARKGREEN);
+			}
 			figureVisual[counter].setArcHeight(sideLength);
 			figureVisual[counter].setArcWidth(sideLength);
 			figureVisual[counter].addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 			borderPane.getChildren().add(figureVisual[counter]);
+			figureVisual[counter].getName().setMouseTransparent(true);
+			borderPane.getChildren().add(figureVisual[counter].getName());
 			counter++;
 		}
 	}
@@ -100,7 +109,7 @@ public class ChessBoardView {
 				for(int i = 0; i<64; i++) {
 					if(tile.equals(chessField[i%8][i/8])){
 						if(last != null) {
-							if(last.getFigure().movementOption(i%8, i/8) && !controller.getDomainController().getGameFlowController().getBoard().getTile(i%8, i/8).isOccupied()) {
+							if(last.getFigure().movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
 								controller.getDomainController().getGameFlowController().turn(last.getFigure(), i%8, i/8);
 								colorBoardTilesToNormal();
 								updateFigures();
@@ -122,39 +131,19 @@ public class ChessBoardView {
 		for(FigureVisual figures : figureVisual) {
 			figures.setX(figures.getFigure().getX()*sideLength);
 			figures.setY(figures.getFigure().getY()*sideLength);
+			figures.getName().setX(figures.getFigure().getX()*sideLength+sideLength*0.25);
+			figures.getName().setY(figures.getFigure().getY()*sideLength+sideLength*0.5);
 		}
 	}
 
 	public void showPossibleTurns(Figure figure) {
 
-
-
-
-		if(figure instanceof Figure_Rook) {
-			boolean[][] occupation = new boolean[8][8];
-
-			Figure_Rook rook = (Figure_Rook) figure;
-
 			for(int i = 0; i<64; i++) {
-				int x = i%8;
-				int y = i/8;
-				if(rook.movementOption(x, y, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
-					chessField[x][y].setFill(Color.YELLOW);
-				}
-			}
-
-
-		}
-		else  {
-			for(int i = 0; i<64; i++) {
-				if(figure.movementOption(i%8, i/8) && !controller.getDomainController().getGameFlowController().getBoard().getTile(i%8, i/8).isOccupied()) {
+				if(figure.movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
 				chessField[i%8][i/8].setFill(Color.YELLOW);
 			
 				}
 			}
-		}
-
-
 	}
 
 

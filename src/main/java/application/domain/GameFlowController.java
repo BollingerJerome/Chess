@@ -55,28 +55,28 @@ public class GameFlowController {
 		figures = new Figure[32];
 		int number = 0;
 		
-		figures[number++] = new Figure_Rook("Rook_white", "00", true, 0, 0, true);
-		figures[number++] = new Figure_Knight("King_white", "00", true, 1, 0, true);
-		figures[number++] = new Figure_Bishop("King_white", "00", true, 2, 0, true);
-		figures[number++] = new Figure_King("King_white", "00", true, 3, 0, true);
-		figures[number++] = new Figure_Queen("King_white", "00", true, 4, 0, true);
-		figures[number++] = new Figure_Bishop("King_white", "00", true, 5, 0, true);
-		figures[number++] = new Figure_Knight("King_white", "00", true, 6, 0, true);
-		figures[number++] = new Figure_Rook("King_white", "00", true, 7, 0, true);
+		figures[number++] = new Figure_Rook("Rook", "00", true, 0, 0, true);
+		figures[number++] = new Figure_Knight("Knight", "00", true, 1, 0, true);
+		figures[number++] = new Figure_Bishop("Bishop", "00", true, 2, 0, true);
+		figures[number++] = new Figure_King("King", "00", true, 3, 0, true);
+		figures[number++] = new Figure_Queen("Queen", "00", true, 4, 0, true);
+		figures[number++] = new Figure_Bishop("Bishop", "00", true, 5, 0, true);
+		figures[number++] = new Figure_Knight("Knight", "00", true, 6, 0, true);
+		figures[number++] = new Figure_Rook("Rook", "00", true, 7, 0, true);
 		
 		
-		figures[number++] = new Figure_Rook("Rook_white", "00", true, 0, 7, false);
-		figures[number++] = new Figure_Knight("King_white", "00", true, 1, 7, false);
-		figures[number++] = new Figure_Bishop("King_white", "00", true, 2, 7, false);
-		figures[number++] = new Figure_King("King_white", "00", true, 3, 7, false);
-		figures[number++] = new Figure_Queen("King_white", "00", true, 4, 7, false);
-		figures[number++] = new Figure_Bishop("King_white", "00", true, 5, 7, false);
-		figures[number++] = new Figure_Knight("King_white", "00", true, 6, 7, false);
-		figures[number++] = new Figure_Rook("King_white", "00", true, 7, 7, false);
+		figures[number++] = new Figure_Rook("Rook", "00", true, 0, 7, false);
+		figures[number++] = new Figure_Knight("Knight", "00", true, 1, 7, false);
+		figures[number++] = new Figure_Bishop("Bishop", "00", true, 2, 7, false);
+		figures[number++] = new Figure_King("King", "00", true, 3, 7, false);
+		figures[number++] = new Figure_Queen("Queen", "00", true, 4, 7, false);
+		figures[number++] = new Figure_Bishop("Bishop", "00", true, 5, 7, false);
+		figures[number++] = new Figure_Knight("Knight", "00", true, 6, 7, false);
+		figures[number++] = new Figure_Rook("Rook", "00", true, 7, 7, false);
 		
 		for(int i = 0; i<8; i++) {
-			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 1, true);
-			figures[number++] = new Figure_Pawn("King_white", "00", true, i, 6, false);
+			figures[number++] = new Figure_Pawn("Pawn", "00", true, i, 1, true);
+			figures[number++] = new Figure_Pawn("Pawn", "00", true, i, 6, false);
 		}
 		
 	}

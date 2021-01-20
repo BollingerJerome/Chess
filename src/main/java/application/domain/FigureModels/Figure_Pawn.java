@@ -33,5 +33,33 @@ public class Figure_Pawn extends Figure implements Movement {
 		}
 
 	}
+	
+	public boolean movementOption(int x, int y, boolean[][] occupation) {
+		int thisY = this.getY();
+		int thisX = this.getX();
+
+		if(!occupation[x][y]) {
+			if(this.isWhite()) {
+				if(y-thisY == 1 && x == thisX) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				if(thisY-y == 1  && x == thisX) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+
+		}
+		else {
+			return false;
+		}
+	}
 
 }
