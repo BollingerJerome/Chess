@@ -1,5 +1,7 @@
 package application.domain.FigureModels;
 
+import application.domain.Board;
+
 public class Figure_Pawn extends Figure implements Movement {
 
 
@@ -14,7 +16,7 @@ public class Figure_Pawn extends Figure implements Movement {
 	public boolean movementOption(int x, int y) {
 		int thisY = this.getY();
 		int thisX = this.getX();
-		
+
 		if(this.isWhite()) {
 			if(y-thisY == 1 && x == thisX) {
 				return true;
@@ -33,7 +35,7 @@ public class Figure_Pawn extends Figure implements Movement {
 		}
 
 	}
-	
+
 	public boolean movementOption(int x, int y, boolean[][] occupation) {
 		int thisY = this.getY();
 		int thisX = this.getX();
@@ -62,4 +64,25 @@ public class Figure_Pawn extends Figure implements Movement {
 		}
 	}
 
+	public boolean canEat(Figure figure, boolean[][] notNeeded) {
+		int thisY = this.getY();
+		int thisX = this.getX();
+		int figureX = figure.getX();
+		int figureY = figure.getY();
+		if(this.isWhite() && !figure.isWhite()) {
+
+			if((figureX == thisX+1 || figureX == thisX-1) && figureY == thisY+1) {
+				return true;
+			}
+		}
+		else if(!this.isWhite() && figure.isWhite()){
+			if((figureX == thisX+1 || figureX == thisX-1) && figureY == thisY-1) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 }

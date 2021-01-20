@@ -69,5 +69,22 @@ public class Figure_Bishop extends Figure implements Movement {
 
 		return false;
 	}
+	
+	public boolean canEat(Figure figure, boolean[][] occupation) {
+		int thisY = this.getY();
+		int thisX = this.getX();
+		int figureX = figure.getX();
+		int figureY = figure.getY();
+		if(this.isWhite() != figure.isWhite()) {
+
+			boolean[][] occup = occupation;
+			occup[figureX][figureY] = false;
+			if(movementOption(figureX,figureY,occup)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 }

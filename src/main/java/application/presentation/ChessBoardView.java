@@ -87,7 +87,7 @@ public class ChessBoardView {
 		}
 	}
 
-	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler
+	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler clicking on figure
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
@@ -95,13 +95,14 @@ public class ChessBoardView {
 				FigureVisual figureVisual = (FigureVisual) event.getSource();
 				last = figureVisual;
 				showPossibleTurns(figureVisual.getFigure());
+				showPossiblePrey(figureVisual.getFigure());
 				updateFigures();
 
 			}
 		};
 	};
 
-	private EventHandler<MouseEvent> getTileEventHandler (){ 	//adding Eventhandler
+	private EventHandler<MouseEvent> getTileEventHandler (){ 	//adding Eventhandler clicking on options
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
@@ -144,6 +145,15 @@ public class ChessBoardView {
 			
 				}
 			}
+	}
+	
+	public void showPossiblePrey(Figure hunter) {
+		for(FigureVisual figures : figureVisual) {
+			if(hunter.canEat(figures.getFigure(), controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
+				
+				chessField[figures.getFigure().getX()][figures.getFigure().getY()].setFill(Color.RED);
+			}
+		}
 	}
 
 
