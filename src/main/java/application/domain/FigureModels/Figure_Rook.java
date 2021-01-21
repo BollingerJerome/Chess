@@ -7,7 +7,9 @@ public class Figure_Rook extends Figure implements Movement {
 
 	public Figure_Rook(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
+		this.firstMove = true;
 	}
+	private boolean firstMove;
 
 	public boolean movementOption(int x, int y) {
 		int thisX = this.getX();
@@ -85,4 +87,12 @@ public class Figure_Rook extends Figure implements Movement {
 		return false;
 	}
 
+	
+	@Override
+	public void move(int posX, int posY) {
+		this.setX(posX);
+		this.setY(posY);
+		this.firstMove = false;
+	}
+	
 }

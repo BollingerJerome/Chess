@@ -11,12 +11,17 @@ public class Figure_Pawn extends Figure implements Movement {
 
 	public Figure_Pawn(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
+		this.firstMove = true;
 	}
+	
+	
+	private boolean firstMove;
 
 	public boolean movementOption(int x, int y) {
 		int thisY = this.getY();
 		int thisX = this.getX();
-
+		
+		
 		if(this.isWhite()) {
 			if(y-thisY == 1 && x == thisX) {
 				return true;
@@ -45,12 +50,18 @@ public class Figure_Pawn extends Figure implements Movement {
 				if(y-thisY == 1 && x == thisX) {
 					return true;
 				}
+				else if(this.firstMove && y-thisY == 2 && x == thisX) {
+					return true;
+				}
 				else {
 					return false;
 				}
 			}
 			else {
 				if(thisY-y == 1  && x == thisX) {
+					return true;
+				}
+				else if(this.firstMove && thisY-y == 2 && x == thisX) {
 					return true;
 				}
 				else {
@@ -62,6 +73,13 @@ public class Figure_Pawn extends Figure implements Movement {
 		else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void move(int posX, int posY) {
+		this.setX(posX);
+		this.setY(posY);
+		this.firstMove = false;
 	}
 
 	public boolean canEat(Figure figure, boolean[][] notNeeded) {
