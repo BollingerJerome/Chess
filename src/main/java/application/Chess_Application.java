@@ -10,6 +10,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+
+//github transfer test
 public class Chess_Application extends Application{
 
 	public static void main(String[] args) {
