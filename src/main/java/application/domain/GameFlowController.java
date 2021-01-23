@@ -14,46 +14,49 @@ public class GameFlowController {
 
 	public GameFlowController() {
 		board = new Board(60);
-		
+
 		start();
 	}
-	
+
 	private Figure[] figures;
 	private Board board;
 	private TurnModel turnModel;
-	
+
 	public void start() {
-		
+
 		turnModel = new TurnModel();
 		generateFigures();
 		updateOccupation();
-		
+
 	}
-	
+
 	public void turn(Figure figure, int x, int y) {
-		if(!board.getTile(x, y).isOccupied()) {
-			figure.move(x, y);
-			turnModel.updateOne();
-			updateOccupation();
-		}
+
+
+		figure.move(x, y);
+		turnModel.updateOne();
+		updateOccupation();
+
 	}
-		
-	
+
+
 	public void updateOccupation() {
-		
+
 		for(int i = 0; i<64; i++) {
 			board.getTile(i%8, i/8).setOccupied(false);
 		}
-		
+
 		for(Figure figure : figures) {
-			board.getTile(figure.getX(), figure.getY()).setOccupied(true);
+			if(figure.isAlive()) {
+				board.getTile(figure.getX(), figure.getY()).setOccupied(true);
+			}
 		}
 	}
-	
+
 	public void generateFigures() {
 		figures = new Figure[32];
 		int number = 0;
-		
+
 		figures[number++] = new Figure_Rook("Rook", "00", true, 0, 0, true);
 		figures[number++] = new Figure_Knight("Knight", "00", true, 1, 0, true);
 		figures[number++] = new Figure_Bishop("Bishop", "00", true, 2, 0, true);
@@ -62,8 +65,8 @@ public class GameFlowController {
 		figures[number++] = new Figure_Bishop("Bishop", "00", true, 5, 0, true);
 		figures[number++] = new Figure_Knight("Knight", "00", true, 6, 0, true);
 		figures[number++] = new Figure_Rook("Rook", "00", true, 7, 0, true);
-		
-		
+
+
 		figures[number++] = new Figure_Rook("Rook", "00", true, 0, 7, false);
 		figures[number++] = new Figure_Knight("Knight", "00", true, 1, 7, false);
 		figures[number++] = new Figure_Bishop("Bishop", "00", true, 2, 7, false);
@@ -72,12 +75,12 @@ public class GameFlowController {
 		figures[number++] = new Figure_Bishop("Bishop", "00", true, 5, 7, false);
 		figures[number++] = new Figure_Knight("Knight", "00", true, 6, 7, false);
 		figures[number++] = new Figure_Rook("Rook", "00", true, 7, 7, false);
-		
+
 		for(int i = 0; i<8; i++) {
 			figures[number++] = new Figure_Pawn("Pawn", "00", true, i, 1, true);
 			figures[number++] = new Figure_Pawn("Pawn", "00", true, i, 6, false);
 		}
-		
+
 	}
 
 
@@ -92,6 +95,7 @@ public class GameFlowController {
 
 
 	public Board getBoard() {
+		this.updateOccupation();
 		return board;
 	}
 

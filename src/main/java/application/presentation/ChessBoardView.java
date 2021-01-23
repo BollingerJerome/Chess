@@ -19,6 +19,7 @@ public class ChessBoardView {
 		this.borderPane = new BorderPane();
 		this.eventHandler = getEventHandler();
 		this.tileEeventHandler = getTileEventHandler();
+		this.getKilled = getKilledEventHandler();
 	}
 
 
@@ -28,9 +29,10 @@ public class ChessBoardView {
 	private FigureVisual[] figureVisual;
 	private EventHandler<MouseEvent> eventHandler;
 	private EventHandler<MouseEvent> tileEeventHandler;
+	private EventHandler<MouseEvent> getKilled;
 	private FigureVisual last;
 
-	
+
 	public void updateFigureEvents() {
 		boolean isWhiteTurn = controller.getDomainController().getTurnModel().isWhiteTurn();
 		for(FigureVisual figures : figureVisual) {
@@ -52,8 +54,8 @@ public class ChessBoardView {
 			}
 		}
 	}
-	
-	
+
+
 	public void colorBoardTilesToNormal() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();
 		Tile[][] tile = board.getTileField();
@@ -94,7 +96,7 @@ public class ChessBoardView {
 		double sideLength = controller.getDomainController().getGameFlowController().getBoard().getSideLength();
 		for(Figure figures : controller.getDomainController().getGameFlowController().getFigures()) {
 			figureVisual[counter] = new FigureVisual(figures.getX(), figures.getY(), sideLength, figures);
-			
+
 			if(figureVisual[counter].getFigure().isWhite()) {
 				figureVisual[counter].setFill(Color.LIGHTGREEN);
 			}
@@ -103,7 +105,7 @@ public class ChessBoardView {
 			}
 			figureVisual[counter].setArcHeight(sideLength);
 			figureVisual[counter].setArcWidth(sideLength);
-			
+
 			borderPane.getChildren().add(figureVisual[counter]);
 			figureVisual[counter].getName().setMouseTransparent(true);
 			borderPane.getChildren().add(figureVisual[counter].getName());
@@ -111,6 +113,22 @@ public class ChessBoardView {
 		}
 		updateFigureEvents();
 	}
+
+	private EventHandler<MouseEvent> getKilledEventHandler (){ 	//adding Eventhandler eating figure
+		return new EventHandler<MouseEvent>() {		
+			//@Override
+			public void handle(MouseEvent event) {
+				FigureVisual figureVis = (FigureVisual) event.getSource();
+				figureVis.removeEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
+				figureVis.getFigure().setAlive(false);
+				controller.getDomainController().getGameFlowController().turn(last.getFigure(), figureVis.getFigure().getX(), figureVis.getFigure().getY());
+				colorBoardTilesToNormal();
+				updateFigures();
+				updateFigureEvents();
+				last = null;
+			}
+		};
+	};
 
 	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler clicking on figure
 		return new EventHandler<MouseEvent>() {		
@@ -120,10 +138,9 @@ public class ChessBoardView {
 				FigureVisual figureVisual = (FigureVisual) event.getSource();
 				last = figureVisual;
 				showPossibleTurns(figureVisual.getFigure());
+				removeEatingEventHandler();
 				showPossiblePrey(figureVisual.getFigure());
-				updateFigures();
-				updateFigureEvents();
-
+				
 			}
 		};
 	};
@@ -145,9 +162,9 @@ public class ChessBoardView {
 							}
 
 						}
-
 					}
 				}
+				removeEatingEventHandler();
 			}
 		};
 	};
@@ -157,30 +174,40 @@ public class ChessBoardView {
 	public void updateFigures() {
 		double sideLength = controller.getDomainController().getGameFlowController().getBoard().getSideLength();
 		for(FigureVisual figures : figureVisual) {
-			figures.setX(figures.getFigure().getX()*sideLength);
-			figures.setY(figures.getFigure().getY()*sideLength);
-			figures.getName().setX(figures.getFigure().getX()*sideLength+sideLength*0.25);
-			figures.getName().setY(figures.getFigure().getY()*sideLength+sideLength*0.5);
+			if(figures.getFigure().isAlive()) {
+				figures.setX(figures.getFigure().getX()*sideLength);
+				figures.setY(figures.getFigure().getY()*sideLength);
+				figures.getName().setX(figures.getFigure().getX()*sideLength+sideLength*0.25);
+				figures.getName().setY(figures.getFigure().getY()*sideLength+sideLength*0.5);
+			}
+			else {
+				borderPane.getChildren().remove(figures);
+				borderPane.getChildren().remove(figures.getName());
+			}
 		}
 	}
 
 	public void showPossibleTurns(Figure figure) {
-
-			for(int i = 0; i<64; i++) {
-				if(figure.movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
+		for(int i = 0; i<64; i++) {
+			if(figure.movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
 				chessField[i%8][i/8].setFill(Color.YELLOW);
-			
-				}
-			}
-	}
-	
-	public void showPossiblePrey(Figure hunter) {
-		for(FigureVisual figures : figureVisual) {
-			if(hunter.canEat(figures.getFigure(), controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
-				
-				chessField[figures.getFigure().getX()][figures.getFigure().getY()].setFill(Color.RED);
 			}
 		}
+	}
+
+	public void showPossiblePrey(Figure hunter) {
+		for(FigureVisual figures : figureVisual) {
+			if(figures.getFigure().isAlive() && hunter.canEat(figures.getFigure(), controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
+				chessField[figures.getFigure().getX()][figures.getFigure().getY()].setFill(Color.RED);
+				figures.addEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
+			}
+		}
+	}
+	
+	public void removeEatingEventHandler() {
+		for(FigureVisual figures : figureVisual) {
+				figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
+			}
 	}
 
 

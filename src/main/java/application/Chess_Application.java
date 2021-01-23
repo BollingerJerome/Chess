@@ -28,8 +28,6 @@ public class Chess_Application extends Application{
 	public void start(Stage primaryStage) {
 		
 		this.gameFlowController = new GameFlowController();
-
-		
 		this.domainController = new DomainController(gameFlowController);
 		this.controller = new Controller(chessBoardView, domainController);
 		this.chessBoardView = new ChessBoardView(controller);
