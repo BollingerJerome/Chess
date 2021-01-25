@@ -38,7 +38,7 @@ public class Figure_KingTest {
 
 		king = new Figure_King("king", "0", true, 4, 4, true);
 		
-		assertTrue(king.movementOption(7, 7));
+		assertTrue(king.movementOption(5, 5));
 		
 	}
 

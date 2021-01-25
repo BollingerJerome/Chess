@@ -13,15 +13,15 @@ import javafx.scene.input.MouseEvent;
 public class GameFlowController {
 
 	public GameFlowController() {
-		board = new Board(60);
-
+		this.board = new Board(60);
+		this.checkModel = new CheckModel();
 		start();
 	}
 
 	private Figure[] figures;
 	private Board board;
 	private TurnModel turnModel;
-
+	private CheckModel checkModel;
 	public void start() {
 
 		turnModel = new TurnModel();
@@ -32,16 +32,15 @@ public class GameFlowController {
 
 	public void turn(Figure figure, int x, int y) {
 
-
+		checkModel.checkIfCheck(!turnModel.isWhiteTurn(), figures, board.getOccupation());
 		figure.move(x, y);
+		checkModel.checkIfCheck(!turnModel.isWhiteTurn(), figures, board.getOccupation());
 		turnModel.updateOne();
 		updateOccupation();
 
 	}
-
-
+	
 	public void updateOccupation() {
-
 		for(int i = 0; i<64; i++) {
 			board.getTile(i%8, i/8).setOccupied(false);
 		}
