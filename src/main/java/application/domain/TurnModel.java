@@ -10,7 +10,7 @@ public class TurnModel {
 
 	private int state;
 	private int turn;
-	boolean whiteTurn;
+	private boolean whiteTurn;
 	
 	public void updateOne() {
 		this.setTurn(this.getTurn()+1);

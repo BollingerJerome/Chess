@@ -17,6 +17,7 @@ public class GameFlowController {
 	public GameFlowController() {
 		this.board = new Board(60);
 		this.checkModel = new CheckModel();
+		this.last = null;
 		start();
 	}
 
@@ -24,6 +25,7 @@ public class GameFlowController {
 	private Board board;
 	private TurnModel turnModel;
 	private CheckModel checkModel;
+	private Figure last;
 	
 	public void start() {
 
@@ -32,6 +34,8 @@ public class GameFlowController {
 		updateOccupation();
 
 	}
+	
+	
 	
 	public void paintTiles(Figure figure) {
 		showPath(figure);
@@ -57,9 +61,40 @@ public class GameFlowController {
 			}
 		}
 	}
+	private void eraseTileColor() {
+		for (int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				board.getTile(i, j).setRed(false);
+				board.getTile(i, j).setYellow(false);
+			}
+		}
+	}
 	
-	public void handling(Object source) {
-		
+	
+	public void clickOnFigure(Figure source) {
+		if(turnModel.isWhiteTurn() == source.isWhite()) {
+			paintTiles(source);
+			this.last = source;
+		}
+	}
+	public void clickOnTile(Tile tile) {
+		if(tile.isYellow()) {
+			last.move(tile.getX(), tile.getY());
+			updateOccupation();
+			turnModel.updateOne();
+			eraseTileColor();
+		}
+		else if(tile.isRed()) {
+			for(Figure victim: this.figures) {
+				if(victim.getX()==tile.getX() && victim.getY() == tile.getY()) {
+					victim.setAlive(false);
+					last.move(tile.getX(), tile.getY());
+					updateOccupation();
+					turnModel.updateOne();
+					eraseTileColor();
+				}
+			}
+		}
 	}
 
 	public void turn(Figure figure, int x, int y) {

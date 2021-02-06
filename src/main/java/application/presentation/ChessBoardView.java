@@ -31,30 +31,10 @@ public class ChessBoardView {
 	private FigureVisual last;
 
 
-	public void updateFigureEvents() {
-		boolean isWhiteTurn = controller.getDomainController().getTurnModel().isWhiteTurn();
-		for(FigureVisual figures : figureVisual) {
-			if(figures.getFigure().isWhite()) {
-				if(isWhiteTurn) {
-					figures.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-				}
-				else {
-					figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-				}
-			}
-			else {
-				if(isWhiteTurn) {
-					figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-				}
-				else {
-					figures.addEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
-				}
-			}
-		}
-	}
 
 
-	public void colorBoardTilesToNormal() {
+
+	private void colorBoardTilesToNormal() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();
 		Tile[][] tile = board.getTileField();
 		for(int i = 0; i<8; i++) {
@@ -65,7 +45,6 @@ public class ChessBoardView {
 				else {
 					chessField[i][j].setFill(Color.WHITE);
 				}
-				chessField[i][j].removeEventHandler(MouseEvent.MOUSE_CLICKED, eventHandler);
 			}
 		}
 	}
@@ -103,22 +82,24 @@ public class ChessBoardView {
 			}
 			figureVisual[counter].setArcHeight(sideLength);
 			figureVisual[counter].setArcWidth(sideLength);
+			figureVisual[counter].addEventHandler(MouseEvent.MOUSE_CLICKED, figureClick);
 
 			borderPane.getChildren().add(figureVisual[counter]);
 			figureVisual[counter].getName().setMouseTransparent(true);
 			borderPane.getChildren().add(figureVisual[counter].getName());
 			counter++;
 		}
-		updateFigureEvents();
 	}
 
-	
+
 
 	private EventHandler<MouseEvent> getFigureEventHandler (){ 	//adding Eventhandler clicking on figure
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
-				controller.getDomainController().getGameFlowController().handling(event.getSource());	
+				FigureVisual source = (FigureVisual) event.getSource();
+				controller.getDomainController().getGameFlowController().clickOnFigure(source.getFigure());	
+				update();
 			}
 		};
 	};
@@ -127,14 +108,44 @@ public class ChessBoardView {
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
-				
+				Rectangle source = (Rectangle) event.getSource();
+				Tile tile = null;
+				for(int i = 0; i<8;i++) {
+					for(int j = 0; j<8; j++) {
+						if(chessField[i][j].equals(source)) {
+							tile = controller.getDomainController().getGameFlowController().getBoard().getTile(i, j);
+							controller.getDomainController().getGameFlowController().clickOnTile(tile);
+							update();
+							return;
+						}
+					}
+				}
 			}
 		};
 	};
 
+	private void update() {
+		colorBoardTilesToNormal();
+		updateField();
+		updateFigures();
+	}
+
+	private void updateField() {
+		Board board = controller.getDomainController().getGameFlowController().getBoard();
+		for(int i = 0; i<8;i++) {
+			for(int j = 0; j<8; j++) {
+				if(board.getTile(i, j).isYellow()) {
+					chessField[i][j].setFill(Color.YELLOW);
+				}
+				else if(board.getTile(i, j).isRed()) {
+					chessField[i][j].setFill(Color.RED);
+				}
+			}
+		}
+	}
 
 
-	public void updateFigures() {
+	private void updateFigures() {
 		double sideLength = controller.getDomainController().getGameFlowController().getBoard().getSideLength();
 		for(FigureVisual figures : figureVisual) {
 			if(figures.getFigure().isAlive()) {
@@ -152,20 +163,8 @@ public class ChessBoardView {
 
 
 
-	public void showPossiblePrey(Figure hunter) {
-		for(FigureVisual figures : figureVisual) {
-			if(figures.getFigure().isAlive() && hunter.canEat(figures.getFigure(), controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
-				chessField[figures.getFigure().getX()][figures.getFigure().getY()].setFill(Color.RED);
-				figures.addEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
-			}
-		}
-	}
-	
-	public void removeEatingEventHandler() {
-		for(FigureVisual figures : figureVisual) {
-				figures.removeEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
-			}
-	}
+
+
 
 
 	public Scene showScene() {

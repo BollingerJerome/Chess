@@ -36,6 +36,7 @@ public class Chess_Application extends Application{
 		
 		controller.setChessBoardView(chessBoardView);
 		chessBoardView.addBoardTiles();
+		chessBoardView.figureSetup();
 		
 		
 		try {
