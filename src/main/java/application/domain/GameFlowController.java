@@ -32,8 +32,7 @@ public class GameFlowController {
 		generateFigures();
 		updateOccupation();
 	}
-	
-	//test
+
 	
 	public void paintTiles(Figure figure) {
 		showPath(figure);
