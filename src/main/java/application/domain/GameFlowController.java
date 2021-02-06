@@ -7,8 +7,10 @@ import application.domain.FigureModels.Figure_Knight;
 import application.domain.FigureModels.Figure_Pawn;
 import application.domain.FigureModels.Figure_Queen;
 import application.domain.FigureModels.Figure_Rook;
+import application.presentation.FigureVisual;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 public class GameFlowController {
 
@@ -22,12 +24,42 @@ public class GameFlowController {
 	private Board board;
 	private TurnModel turnModel;
 	private CheckModel checkModel;
+	
 	public void start() {
 
 		turnModel = new TurnModel();
 		generateFigures();
 		updateOccupation();
 
+	}
+	
+	public void paintTiles(Figure figure) {
+		showPath(figure);
+		showPrey(figure);
+	}
+	private void showPath(Figure figure) {
+		for(int i = 0; i<64; i++) {
+			if(figure.movementOption(i%8, i/8, this.board.getOccupation())) {
+				this.board.getTile(i%8, i/8).setYellow(true);
+			}
+			else {
+				this.board.getTile(i%8, i/8).setYellow(false);
+			}
+		}
+	}
+	private void showPrey(Figure hunter) {
+		for(Figure figure : this.figures) {
+			if(figure.isAlive() && hunter.canEat(figure, this.board.getOccupation())) {
+				this.board.getTile(figure.getX(), figure.getY()).setRed(true);
+			}
+			else {
+				this.board.getTile(figure.getX(), figure.getY()).setRed(false);
+			}
+		}
+	}
+	
+	public void handling(Object source) {
+		
 	}
 
 	public void turn(Figure figure, int x, int y) {
@@ -44,14 +76,12 @@ public class GameFlowController {
 		for(int i = 0; i<64; i++) {
 			board.getTile(i%8, i/8).setOccupied(false);
 		}
-
 		for(Figure figure : figures) {
 			if(figure.isAlive()) {
 				board.getTile(figure.getX(), figure.getY()).setOccupied(true);
 			}
 		}
 	}
-
 	public void generateFigures() {
 		figures = new Figure[32];
 		int number = 0;
@@ -86,28 +116,19 @@ public class GameFlowController {
 	public Figure[] getFigures() {
 		return figures;
 	}
-
-
 	public void setFigures(Figure[] figures) {
 		this.figures = figures;
 	}
-
-
 	public Board getBoard() {
 		this.updateOccupation();
 		return board;
 	}
-
-
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-
-
 	public TurnModel getTurnModel() {
 		return turnModel;
 	}
-
 	public void setTurnModel(TurnModel turnModel) {
 		this.turnModel = turnModel;
 	}

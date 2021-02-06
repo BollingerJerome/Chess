@@ -8,6 +8,8 @@ public class Tile {
 		this.occupied = occupied;
 		this.isBlack = isBlack;
 		this.sideLength = sideLength;
+		this.red = false;
+		this.yellow = false;
 
 	}
 	
@@ -15,6 +17,8 @@ public class Tile {
 	private boolean occupied;
 	private boolean isBlack;
 	private double sideLength;
+	private boolean red;
+	private boolean yellow;
 	
 	
 	public int getX() {
@@ -46,6 +50,18 @@ public class Tile {
 	}
 	public void setSideLength(double sideLength) {
 		this.sideLength = sideLength;
+	}
+	public boolean isRed() {
+		return red;
+	}
+	public void setRed(boolean red) {
+		this.red = red;
+	}
+	public boolean isYellow() {
+		return yellow;
+	}
+	public void setYellow(boolean yellow) {
+		this.yellow = yellow;
 	}
 
 	

@@ -17,9 +17,8 @@ public class ChessBoardView {
 	public ChessBoardView(Controller controller) {
 		this.controller = controller;
 		this.borderPane = new BorderPane();
-		this.eventHandler = getEventHandler();
-		this.tileEeventHandler = getTileEventHandler();
-		this.getKilled = getKilledEventHandler();
+		this.figureClick = getFigureEventHandler();
+		this.tileClick = getTileEventHandler();
 	}
 
 
@@ -27,9 +26,8 @@ public class ChessBoardView {
 	private Controller controller;
 	private Rectangle[][] chessField;
 	private FigureVisual[] figureVisual;
-	private EventHandler<MouseEvent> eventHandler;
-	private EventHandler<MouseEvent> tileEeventHandler;
-	private EventHandler<MouseEvent> getKilled;
+	private EventHandler<MouseEvent> figureClick;
+	private EventHandler<MouseEvent> tileClick;
 	private FigureVisual last;
 
 
@@ -84,7 +82,7 @@ public class ChessBoardView {
 		}
 		colorBoardTilesToNormal();		
 		for(int i = 0; i<64; i++) {
-			chessField[i%8][i/8].addEventHandler(MouseEvent.MOUSE_CLICKED, tileEeventHandler);
+			chessField[i%8][i/8].addEventHandler(MouseEvent.MOUSE_CLICKED, tileClick);
 			borderPane.getChildren().add(chessField[i%8][i/8]);
 		}
 
@@ -114,33 +112,13 @@ public class ChessBoardView {
 		updateFigureEvents();
 	}
 
-	private EventHandler<MouseEvent> getKilledEventHandler (){ 	//adding Eventhandler eating figure
-		return new EventHandler<MouseEvent>() {		
-			//@Override
-			public void handle(MouseEvent event) {
-				FigureVisual figureVis = (FigureVisual) event.getSource();
-				figureVis.removeEventHandler(MouseEvent.MOUSE_CLICKED, getKilled);
-				figureVis.getFigure().setAlive(false);
-				controller.getDomainController().getGameFlowController().turn(last.getFigure(), figureVis.getFigure().getX(), figureVis.getFigure().getY());
-				colorBoardTilesToNormal();
-				updateFigures();
-				updateFigureEvents();
-				last = null;
-			}
-		};
-	};
+	
 
-	private EventHandler<MouseEvent> getEventHandler (){ 	//adding Eventhandler clicking on figure
+	private EventHandler<MouseEvent> getFigureEventHandler (){ 	//adding Eventhandler clicking on figure
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
-				colorBoardTilesToNormal();
-				FigureVisual figureVisual = (FigureVisual) event.getSource();
-				last = figureVisual;
-				showPossibleTurns(figureVisual.getFigure());
-				removeEatingEventHandler();
-				showPossiblePrey(figureVisual.getFigure());
-				
+				controller.getDomainController().getGameFlowController().handling(event.getSource());	
 			}
 		};
 	};
@@ -149,22 +127,7 @@ public class ChessBoardView {
 		return new EventHandler<MouseEvent>() {		
 			//@Override
 			public void handle(MouseEvent event) {
-				Rectangle tile = (Rectangle) event.getSource();
-				for(int i = 0; i<64; i++) {
-					if(tile.equals(chessField[i%8][i/8])){
-						if(last != null) {
-							if(last.getFigure().movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
-								controller.getDomainController().getGameFlowController().turn(last.getFigure(), i%8, i/8);
-								colorBoardTilesToNormal();
-								updateFigures();
-								updateFigureEvents();
-								last = null;
-							}
-
-						}
-					}
-				}
-				removeEatingEventHandler();
+				
 			}
 		};
 	};
@@ -187,13 +150,7 @@ public class ChessBoardView {
 		}
 	}
 
-	public void showPossibleTurns(Figure figure) {
-		for(int i = 0; i<64; i++) {
-			if(figure.movementOption(i%8, i/8, controller.getDomainController().getGameFlowController().getBoard().getOccupation())) {
-				chessField[i%8][i/8].setFill(Color.YELLOW);
-			}
-		}
-	}
+
 
 	public void showPossiblePrey(Figure hunter) {
 		for(FigureVisual figures : figureVisual) {

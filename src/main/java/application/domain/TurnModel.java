@@ -5,8 +5,10 @@ public class TurnModel {
 	public TurnModel() {
 		this.turn = 0;
 		this.whiteTurn = isWhiteTurn();
+		this.state = 0;
 	}
 
+	private int state;
 	private int turn;
 	boolean whiteTurn;
 	
@@ -33,6 +35,14 @@ public class TurnModel {
 
 	public void setWhiteTurn(boolean whiteTurn) {
 		this.whiteTurn = whiteTurn;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
 	}
 	
 }
