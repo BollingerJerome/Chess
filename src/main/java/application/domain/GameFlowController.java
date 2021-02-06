@@ -28,11 +28,9 @@ public class GameFlowController {
 	private Figure last;
 	
 	public void start() {
-
 		turnModel = new TurnModel();
 		generateFigures();
 		updateOccupation();
-
 	}
 	
 	
