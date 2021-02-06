@@ -33,7 +33,7 @@ public class GameFlowController {
 		updateOccupation();
 	}
 	
-	
+	//test
 	
 	public void paintTiles(Figure figure) {
 		showPath(figure);
