@@ -3,8 +3,7 @@ package application.presentation;
 import application.domain.Board;
 import application.domain.Tile;
 import application.domain.FigureModels.Figure;
-import application.domain.FigureModels.Figure_Bishop;
-import application.domain.FigureModels.Figure_Rook;
+
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -28,7 +27,6 @@ public class ChessBoardView {
 	private FigureVisual[] figureVisual;
 	private EventHandler<MouseEvent> figureClick;
 	private EventHandler<MouseEvent> tileClick;
-	private FigureVisual last;
 
 
 
@@ -129,7 +127,6 @@ public class ChessBoardView {
 		updateField();
 		updateFigures();
 	}
-
 	private void updateField() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();
 		for(int i = 0; i<8;i++) {

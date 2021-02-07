@@ -4,7 +4,7 @@ public class TurnModel {
 
 	public TurnModel() {
 		this.turn = 0;
-		this.whiteTurn = isWhiteTurn();
+		this.whiteTurn = true;
 		this.state = 0;
 	}
 
@@ -14,7 +14,12 @@ public class TurnModel {
 	
 	public void updateOne() {
 		this.setTurn(this.getTurn()+1);
-		this.isWhiteTurn();
+		if(turn%2 == 0) {
+			setWhiteTurn(true);
+		}
+		else {
+			setWhiteTurn(false);
+		}
 	}
 
 	public int getTurn() {
@@ -26,11 +31,7 @@ public class TurnModel {
 	}
 	
 	public boolean isWhiteTurn() {
-		if(turn%2 == 0) {
-			setWhiteTurn(true);
-			return true;
-		}
-		return false;
+		return whiteTurn;
 	}
 
 	public void setWhiteTurn(boolean whiteTurn) {

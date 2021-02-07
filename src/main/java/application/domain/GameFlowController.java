@@ -7,32 +7,25 @@ import application.domain.FigureModels.Figure_Knight;
 import application.domain.FigureModels.Figure_Pawn;
 import application.domain.FigureModels.Figure_Queen;
 import application.domain.FigureModels.Figure_Rook;
-import application.presentation.FigureVisual;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+
 
 public class GameFlowController {
 
 	public GameFlowController() {
 		this.board = new Board(60);
-		this.checkModel = new CheckModel();
+	//	this.checkModel = new CheckModel();
 		this.last = null;
-		start();
+		this.turnModel = new TurnModel();
+		generateFigures();
+		updateOccupation();
 	}
 
 	private Figure[] figures;
 	private Board board;
 	private TurnModel turnModel;
-	private CheckModel checkModel;
+	//private CheckModel checkModel;
 	private Figure last;
 	
-	public void start() {
-		turnModel = new TurnModel();
-		generateFigures();
-		updateOccupation();
-	}
-
 	
 	public void paintTiles(Figure figure) {
 		updateOccupation();
@@ -50,13 +43,13 @@ public class GameFlowController {
 		}
 	}
 	private void showPrey(Figure hunter) {
-		for(Figure figure : this.figures) {
-			if(figure.isAlive()) {
-				if(hunter.canEat(figure, this.board.getOccupation())) {
-					this.board.getTile(figure.getX(), figure.getY()).setRed(true);
+		for(Figure victim : this.figures) {
+			if(victim.isAlive()) {
+				if(hunter.canEat(victim, this.board.getOccupation())) {
+					this.board.getTile(victim.getX(), victim.getY()).setRed(true);
 				}
 				else {
-					this.board.getTile(figure.getX(), figure.getY()).setRed(false);
+					this.board.getTile(victim.getX(), victim.getY()).setRed(false);
 				}
 			}
 		}
@@ -86,27 +79,21 @@ public class GameFlowController {
 		}
 		else if(tile.isRed()) {
 			for(Figure victim: this.figures) {
-				if(victim.getX()==tile.getX() && victim.getY() == tile.getY() && victim.isAlive()) {
-					victim.setAlive(false);
-					updateOccupation();
-					last.move(tile.getX(), tile.getY());
-					updateOccupation();
-					turnModel.updateOne();
-					eraseTileColor();
+				if(victim.isAlive()) {
+					if(victim.getX()==tile.getX() && victim.getY() == tile.getY()) {
+						victim.setAlive(false);
+						updateOccupation();
+						last.move(tile.getX(), tile.getY());
+						updateOccupation();
+						turnModel.updateOne();
+						eraseTileColor();
+						return;
+					}
 				}
 			}
 		}
 	}
 
-	public void turn(Figure figure, int x, int y) {
-
-		checkModel.checkIfCheck(!turnModel.isWhiteTurn(), figures, board.getOccupation());
-		figure.move(x, y);
-		checkModel.checkIfCheck(!turnModel.isWhiteTurn(), figures, board.getOccupation());
-		turnModel.updateOne();
-		updateOccupation();
-
-	}
 	
 	public void updateOccupation() {
 		for(int i = 0; i<64; i++) {

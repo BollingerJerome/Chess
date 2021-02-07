@@ -113,8 +113,7 @@ public class Figure_Queen extends Figure implements Movement {
 	}
 	
 	public boolean canEat(Figure figure, boolean[][] occupation) {
-		int thisY = this.getY();
-		int thisX = this.getX();
+
 		int figureX = figure.getX();
 		int figureY = figure.getY();
 		if(this.isWhite() != figure.isWhite()) {
