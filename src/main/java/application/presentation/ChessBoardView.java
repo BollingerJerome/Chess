@@ -148,22 +148,18 @@ public class ChessBoardView {
 	private void updateFigures() {
 		double sideLength = controller.getDomainController().getGameFlowController().getBoard().getSideLength();
 		for(FigureVisual figures : figureVisual) {
-			if(figures.getFigure().isAlive()) {
+			if(!figures.getFigure().isAlive()) {
+				borderPane.getChildren().remove(figures);
+				borderPane.getChildren().remove(figures.getName());
+			}
+			else {
 				figures.setX(figures.getFigure().getX()*sideLength);
 				figures.setY(figures.getFigure().getY()*sideLength);
 				figures.getName().setX(figures.getFigure().getX()*sideLength+sideLength*0.25);
 				figures.getName().setY(figures.getFigure().getY()*sideLength+sideLength*0.5);
 			}
-			else {
-				borderPane.getChildren().remove(figures);
-				borderPane.getChildren().remove(figures.getName());
-			}
 		}
 	}
-
-
-
-
 
 
 

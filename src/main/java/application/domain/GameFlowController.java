@@ -35,6 +35,7 @@ public class GameFlowController {
 
 	
 	public void paintTiles(Figure figure) {
+		updateOccupation();
 		showPath(figure);
 		showPrey(figure);
 	}
@@ -50,11 +51,13 @@ public class GameFlowController {
 	}
 	private void showPrey(Figure hunter) {
 		for(Figure figure : this.figures) {
-			if(figure.isAlive() && hunter.canEat(figure, this.board.getOccupation())) {
-				this.board.getTile(figure.getX(), figure.getY()).setRed(true);
-			}
-			else {
-				this.board.getTile(figure.getX(), figure.getY()).setRed(false);
+			if(figure.isAlive()) {
+				if(hunter.canEat(figure, this.board.getOccupation())) {
+					this.board.getTile(figure.getX(), figure.getY()).setRed(true);
+				}
+				else {
+					this.board.getTile(figure.getX(), figure.getY()).setRed(false);
+				}
 			}
 		}
 	}
@@ -83,8 +86,9 @@ public class GameFlowController {
 		}
 		else if(tile.isRed()) {
 			for(Figure victim: this.figures) {
-				if(victim.getX()==tile.getX() && victim.getY() == tile.getY()) {
+				if(victim.getX()==tile.getX() && victim.getY() == tile.getY() && victim.isAlive()) {
 					victim.setAlive(false);
+					updateOccupation();
 					last.move(tile.getX(), tile.getY());
 					updateOccupation();
 					turnModel.updateOne();
