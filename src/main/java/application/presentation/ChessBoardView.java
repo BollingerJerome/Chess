@@ -137,6 +137,9 @@ public class ChessBoardView {
 				else if(board.getTile(i, j).isRed()) {
 					chessField[i][j].setFill(Color.RED);
 				}
+				else if(board.getTile(i, j).isViolet()) {
+					chessField[i][j].setFill(Color.DARKVIOLET);
+				}
 			}
 		}
 	}

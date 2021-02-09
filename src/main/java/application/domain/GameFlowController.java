@@ -13,21 +13,22 @@ public class GameFlowController {
 
 	public GameFlowController() {
 		this.board = new Board(60);
-	//	this.checkModel = new CheckModel();
+		
 		this.last = null;
 		this.turnModel = new TurnModel();
 		generateFigures();
 		updateOccupation();
+		this.checkModel = new CheckModel((Figure_King) figures[3],(Figure_King) figures[11]);
 	}
 
 	private Figure[] figures;
 	private Board board;
 	private TurnModel turnModel;
-	//private CheckModel checkModel;
+	private CheckModel checkModel;
 	private Figure last;
 	
 	
-	public void paintTiles(Figure figure) {
+	public void psetTilesColor(Figure figure) {
 		updateOccupation();
 		showPath(figure);
 		showPrey(figure);
@@ -54,6 +55,13 @@ public class GameFlowController {
 			}
 		}
 	}
+	private void eraseVioletTile() {
+		for (int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				board.getTile(i, j).setViolet(false);
+			}
+		}
+	}
 	private void eraseTileColor() {
 		for (int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
@@ -62,21 +70,27 @@ public class GameFlowController {
 			}
 		}
 	}
-	
+	private boolean WouldBeCheck(Figure figure, boolean white, Figure[] figures, boolean[][] occupation ){
+		
+		
+		
+	}
 	
 	public void clickOnFigure(Figure source) {
 		if(turnModel.isWhiteTurn() == source.isWhite()) {
-			paintTiles(source);
+			psetTilesColor(source);
 			this.last = source;
+		}
+		else {
+			return;
 		}
 	}
 	public void clickOnTile(Tile tile) {
+		//clicked on yellow Tile
 		if(tile.isYellow()) {
 			last.move(tile.getX(), tile.getY());
-			updateOccupation();
-			turnModel.updateOne();
-			eraseTileColor();
 		}
+		//clicked on red tile
 		else if(tile.isRed()) {
 			for(Figure victim: this.figures) {
 				if(victim.isAlive()) {
@@ -84,14 +98,27 @@ public class GameFlowController {
 						victim.setAlive(false);
 						updateOccupation();
 						last.move(tile.getX(), tile.getY());
-						updateOccupation();
-						turnModel.updateOne();
-						eraseTileColor();
 						return;
 					}
 				}
 			}
 		}
+		//clicked on every other tile, stop wait for another input
+		else {
+			return;
+		}
+		//set the opponent check
+		if(checkModel.canEatKing(!turnModel.isWhiteTurn(), figures, board.getOccupation())) {
+			board.getTile(checkModel.getKing(!turnModel.isWhiteTurn()).getX(), 
+					checkModel.getKing(!turnModel.isWhiteTurn()).getY()).setViolet(true);
+		}
+		else {
+			eraseVioletTile();
+		}
+		//update occupation, add one to turn and remove all yellow and red tiles
+		updateOccupation();
+		turnModel.updateOne();
+		eraseTileColor();
 	}
 
 	
