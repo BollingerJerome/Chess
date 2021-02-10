@@ -35,11 +35,18 @@ public class GameFlowController {
 	}
 	private void showPath(Figure figure) {
 		for(int i = 0; i<64; i++) {
-			if(figure.movementOption(i%8, i/8, this.board.getOccupation())) {
-				this.board.getTile(i%8, i/8).setYellow(true);
+			int ix = i%8;
+			int iy = i/8;
+			if(figure.movementOption(ix, iy, this.board.getOccupation())) {
+				if(!wouldBeCheck(figure, ix, iy)) {
+					this.board.getTile(ix, iy).setYellow(true);
+				}
+				else {
+					this.board.getTile(ix, iy).setYellow(false);
+				}
 			}
 			else {
-				this.board.getTile(i%8, i/8).setYellow(false);
+				this.board.getTile(ix, iy).setYellow(false);
 			}
 		}
 	}
@@ -47,7 +54,12 @@ public class GameFlowController {
 		for(Figure victim : this.figures) {
 			if(victim.isAlive()) {
 				if(hunter.canEat(victim, this.board.getOccupation())) {
-					this.board.getTile(victim.getX(), victim.getY()).setRed(true);
+					if(!wouldBeCheckIfEaten(hunter, victim, victim.getX(), victim.getY())) {
+						this.board.getTile(victim.getX(), victim.getY()).setRed(true);
+					}
+					else{
+						this.board.getTile(victim.getX(), victim.getY()).setRed(false);
+					}
 				}
 				else {
 					this.board.getTile(victim.getX(), victim.getY()).setRed(false);
@@ -70,12 +82,61 @@ public class GameFlowController {
 			}
 		}
 	}
-	private boolean WouldBeCheck(Figure figure, boolean white, Figure[] figures, boolean[][] occupation ){
+	private boolean wouldBeCheck(Figure figure, int x,int y ){
+		int preX = figure.getX();
+		int preY = figure.getY();
+		if(figure instanceof Figure_Pawn) {
+			((Figure_Pawn) figure).imaginedMove(x, y);
+		}
+		else {
+			figure.move(x, y);
+		}
+		boolean out = false;
+		updateOccupation();
+		if(checkModel.canEatKing(figure.isWhite(), figures, board.getOccupation())) {
+			out = true;
+		}
+		else {
+			out = false;
+		}
 		
-		
-		
+		if(figure instanceof Figure_Pawn) {
+			((Figure_Pawn) figure).imaginedMove(preX, preY);
+		}
+		else {
+			figure.move(preX, preY);
+		}
+		updateOccupation();
+		return out;
 	}
-	
+	private boolean wouldBeCheckIfEaten(Figure figure, Figure victim, int x,int y ){
+		int preX = figure.getX();
+		int preY = figure.getY();
+		victim.setAlive(false);
+		if(figure instanceof Figure_Pawn) {
+			((Figure_Pawn) figure).imaginedMove(x, y);
+		}
+		else {
+			figure.move(x, y);
+		}
+		boolean out = false;
+		updateOccupation();
+		if(checkModel.canEatKing(figure.isWhite(), figures, board.getOccupation())) {
+			out = true;
+		}
+		else {
+			out = false;
+		}
+		if(figure instanceof Figure_Pawn) {
+			((Figure_Pawn) figure).imaginedMove(preX, preY);
+		}
+		else {
+			figure.move(preX, preY);
+		}
+		victim.setAlive(true);
+		updateOccupation();
+		return out;
+	}
 	public void clickOnFigure(Figure source) {
 		if(turnModel.isWhiteTurn() == source.isWhite()) {
 			psetTilesColor(source);
@@ -98,7 +159,7 @@ public class GameFlowController {
 						victim.setAlive(false);
 						updateOccupation();
 						last.move(tile.getX(), tile.getY());
-						return;
+						break;
 					}
 				}
 			}
@@ -117,10 +178,31 @@ public class GameFlowController {
 		}
 		//update occupation, add one to turn and remove all yellow and red tiles
 		updateOccupation();
+		if(availableMoveOption(turnModel.isWhiteTurn())) {
+			System.out.println("someone won!");
+		}
 		turnModel.updateOne();
 		eraseTileColor();
 	}
 
+	public boolean availableMoveOption(boolean white) {
+		Tile[][] preTile = board.getTileField();
+		boolean out = false;
+		for(Figure figure : figures) {
+			if(figure.isWhite() == white && figure.isAlive()) {
+				psetTilesColor(figure);	
+			}
+		}
+		for(int i = 0; i<8; i++) {
+			for(int j = 0; j<8; j++) {
+				if(board.getTile(i, j).isRed() || board.getTile(i, j).isViolet()) {
+					out = true;
+				}
+			}
+		}
+		board.setTileField(preTile);
+		return out;
+	}
 	
 	public void updateOccupation() {
 		for(int i = 0; i<64; i++) {

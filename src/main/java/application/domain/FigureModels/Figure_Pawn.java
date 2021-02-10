@@ -81,6 +81,12 @@ public class Figure_Pawn extends Figure implements Movement {
 		this.setY(posY);
 		this.firstMove = false;
 	}
+	
+	
+	public void imaginedMove(int posX, int posY) {
+		this.setX(posX);
+		this.setY(posY);
+	}
 
 	public boolean canEat(Figure figure, boolean[][] notNeeded) {
 		int thisY = this.getY();
