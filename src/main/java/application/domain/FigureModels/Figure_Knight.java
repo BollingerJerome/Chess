@@ -9,35 +9,7 @@ public class Figure_Knight extends Figure implements Movement {
 		super(name, id, alive, x, y, white);
 	}
 
-	public boolean movementOption(int x, int y) {
 
-		int thisX = this.getX();
-		int thisY = this.getY();
-
-
-		if(x - thisX == 2 || thisX - x == 2) {
-			if(y-thisY == 1 || thisY -y == 1) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else if(y-thisY == 2 || thisY -y == 2) {
-			if(x - thisX == 1 || thisX - x == 1) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		else {
-			return false;
-		}
-
-
-
-	}
 
 
 	public boolean movementOption(int x, int y, boolean[][] occupation) {
@@ -72,8 +44,6 @@ public class Figure_Knight extends Figure implements Movement {
 	}
 
 	public boolean canEat(Figure figure, boolean[][] occupation) {
-		int thisY = this.getY();
-		int thisX = this.getX();
 		int figureX = figure.getX();
 		int figureY = figure.getY();
 		if(this.isWhite() != figure.isWhite()) {

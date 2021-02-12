@@ -8,10 +8,8 @@ public class Figure_King extends Figure implements Movement {
 
 	public Figure_King(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
-		this.firstMove = true;
 	}
 
-	private boolean firstMove;
 	
 	public boolean movementOption(int x, int y) {
 
@@ -41,6 +39,15 @@ public class Figure_King extends Figure implements Movement {
 
 	}
 
+	public boolean rochadePossible(boolean[][] occupation, Figure[] figures) {
+		if(this.isFirstMove()) {
+			if(!occupation[this.getX()+1][this.getY()] && !occupation[this.getX()+2][this.getY()]) {
+				
+			}
+		}
+		return false;
+	}
+	
 	public boolean movementOption(int x, int y, boolean[][] occupation) {
 		int thisX = this.getX();
 		int thisY = this.getY();
@@ -73,8 +80,6 @@ public class Figure_King extends Figure implements Movement {
 	}
 	
 	public boolean canEat(Figure figure, boolean[][] occupation) {
-		int thisY = this.getY();
-		int thisX = this.getX();
 		int figureX = figure.getX();
 		int figureY = figure.getY();
 		if(this.isWhite() != figure.isWhite()) {
@@ -88,12 +93,4 @@ public class Figure_King extends Figure implements Movement {
 		
 		return false;
 	}
-	
-	@Override
-	public void move(int posX, int posY) {
-		this.setX(posX);
-		this.setY(posY);
-		this.firstMove = false;
-	}
-
 }

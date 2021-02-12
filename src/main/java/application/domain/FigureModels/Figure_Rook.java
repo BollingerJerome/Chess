@@ -7,26 +7,8 @@ public class Figure_Rook extends Figure implements Movement {
 
 	public Figure_Rook(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
-		this.firstMove = true;
-	}
-	private boolean firstMove;
-
-	public boolean movementOption(int x, int y) {
-		int thisX = this.getX();
-		int thisY = this.getY();
-
-		if(thisY == y && thisX != x) {
-			return true;
-		}
-		else if(thisX == x && thisY != y) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
-	
 	public boolean movementOption(int x, int y, boolean[][] occupation) {
 		int thisX = this.getX();
 		int thisY = this.getY();
@@ -71,8 +53,6 @@ public class Figure_Rook extends Figure implements Movement {
 	}
 	
 	public boolean canEat(Figure figure, boolean[][] occupation) {
-		int thisY = this.getY();
-		int thisX = this.getX();
 		int figureX = figure.getX();
 		int figureY = figure.getY();
 		if(this.isWhite() != figure.isWhite()) {
@@ -87,12 +67,5 @@ public class Figure_Rook extends Figure implements Movement {
 		return false;
 	}
 
-	
-	@Override
-	public void move(int posX, int posY) {
-		this.setX(posX);
-		this.setY(posY);
-		this.firstMove = false;
-	}
 	
 }

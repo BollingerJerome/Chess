@@ -1,13 +1,10 @@
 package application;
 
-import application.domain.Board;
 import application.domain.DomainController;
 import application.domain.GameFlowController;
 import application.presentation.ChessBoardView;
 import application.presentation.Controller;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 
@@ -19,7 +16,6 @@ public class Chess_Application extends Application{
 		
 	}
 	
-	private Board board;
 	private DomainController domainController;
 	private Controller controller;
 	private GameFlowController gameFlowController;

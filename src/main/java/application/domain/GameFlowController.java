@@ -88,6 +88,12 @@ public class GameFlowController {
 		if(figure instanceof Figure_Pawn) {
 			((Figure_Pawn) figure).imaginedMove(x, y);
 		}
+		else if(figure instanceof Figure_King) {
+			((Figure_King) figure).imaginedMove(x,y);
+		}
+		else if(figure instanceof Figure_Rook) {
+			((Figure_Rook) figure).imaginedMove(x,y);
+		}
 		else {
 			figure.move(x, y);
 		}
@@ -102,6 +108,12 @@ public class GameFlowController {
 
 		if(figure instanceof Figure_Pawn) {
 			((Figure_Pawn) figure).imaginedMove(preX, preY);
+		}
+		else if(figure instanceof Figure_King) {
+			((Figure_King) figure).imaginedMove(preX,preY);
+		}
+		else if(figure instanceof Figure_Rook) {
+			((Figure_Rook) figure).imaginedMove(preX,preY);
 		}
 		else {
 			figure.move(preX, preY);

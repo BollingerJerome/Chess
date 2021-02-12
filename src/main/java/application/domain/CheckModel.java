@@ -1,6 +1,5 @@
 package application.domain;
 
-import java.util.Vector;
 
 import application.domain.FigureModels.Figure;
 import application.domain.FigureModels.Figure_King;
@@ -9,14 +8,16 @@ public class CheckModel {
 
 	public CheckModel(Figure_King white, Figure_King black) {
 		this.check = false;
-		this.forWhite = false;
 		this.kingWhite = white;
 		this.kingBlack = black;
 	}
+	
+	
 	private boolean check;
-	private boolean forWhite;
 	private Figure_King kingWhite;
 	private Figure_King kingBlack;
+	
+	
 	
 	public void checkIfCheck(boolean white, Figure[] figures, boolean[][] occupation) {
 		
@@ -36,17 +37,6 @@ public class CheckModel {
 	public boolean isCheck() {
 		return check;
 	}
-	public void setCheck(boolean check, boolean white) {
-		this.check = check;
-		this.forWhite = white;
-	}
-	private boolean isForWhite() {
-		return forWhite;
-	}
-	public void setForWhite(boolean forWhite) {
-		this.forWhite = forWhite;
-	}
-
 	public Figure_King getKingWhite() {
 		return kingWhite;
 	}
