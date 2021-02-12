@@ -1,9 +1,7 @@
 package application.presentation;
 
-import com.sun.glass.events.MouseEvent;
 
 import application.domain.FigureModels.Figure;
-import javafx.event.EventHandler;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
