@@ -3,15 +3,30 @@
   <groupId>chess</groupId>
   <artifactId>chess</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
+      <javafx.version>15</javafx.version>
       <junit.version>4.13</junit.version>
       <junit.jupiter.version>5.5.2</junit.jupiter.version>
       <junit.vintage.version>5.5.2</junit.vintage.version>
    </properties>
+   
+   
    <dependencies>
+   <dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+			<version>${javafx.version}</version>
+		</dependency>
       <dependency>
          <groupId>org.junit.jupiter</groupId>
          <artifactId>junit-jupiter-api</artifactId>
@@ -75,7 +90,7 @@
             <configuration>
                <archive>
                   <manifest>
-                     <mainClass>application.MemoryApp</mainClass>
+                     <mainClass>application.Chess_Application</mainClass>
                   </manifest>
                </archive>
             </configuration>

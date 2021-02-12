@@ -13,7 +13,7 @@ public class GameFlowController {
 
 	public GameFlowController() {
 		this.board = new Board(60);
-		
+
 		this.last = null;
 		this.turnModel = new TurnModel();
 		generateFigures();
@@ -26,8 +26,8 @@ public class GameFlowController {
 	private TurnModel turnModel;
 	private CheckModel checkModel;
 	private Figure last;
-	
-	
+
+
 	public void psetTilesColor(Figure figure) {
 		updateOccupation();
 		showPath(figure);
@@ -99,7 +99,7 @@ public class GameFlowController {
 		else {
 			out = false;
 		}
-		
+
 		if(figure instanceof Figure_Pawn) {
 			((Figure_Pawn) figure).imaginedMove(preX, preY);
 		}
@@ -143,6 +143,25 @@ public class GameFlowController {
 			this.last = source;
 		}
 		else {
+			if(board.getTile(source.getX(), source.getY()).isRed()) {
+				source.setAlive(false);
+				updateOccupation();
+				last.move(source.getX(), source.getY());
+				if(checkModel.canEatKing(!turnModel.isWhiteTurn(), figures, board.getOccupation())) {
+					board.getTile(checkModel.getKing(!turnModel.isWhiteTurn()).getX(), 
+							checkModel.getKing(!turnModel.isWhiteTurn()).getY()).setViolet(true);
+				}
+				else {
+					eraseVioletTile();
+				}
+				//update occupation, add one to turn and remove all yellow and red tiles
+				updateOccupation();
+				if(!availableMoveOption(!turnModel.isWhiteTurn())) {
+					System.out.println("someone won!");
+				}
+				turnModel.updateOne();
+				eraseTileColor();
+			}
 			return;
 		}
 	}
@@ -178,7 +197,7 @@ public class GameFlowController {
 		}
 		//update occupation, add one to turn and remove all yellow and red tiles
 		updateOccupation();
-		if(availableMoveOption(turnModel.isWhiteTurn())) {
+		if(!availableMoveOption(!turnModel.isWhiteTurn())) {
 			System.out.println("someone won!");
 		}
 		turnModel.updateOne();
@@ -195,7 +214,7 @@ public class GameFlowController {
 		}
 		for(int i = 0; i<8; i++) {
 			for(int j = 0; j<8; j++) {
-				if(board.getTile(i, j).isRed() || board.getTile(i, j).isViolet()) {
+				if(board.getTile(i, j).isRed() || board.getTile(i, j).isYellow()) {
 					out = true;
 				}
 			}
@@ -203,7 +222,7 @@ public class GameFlowController {
 		board.setTileField(preTile);
 		return out;
 	}
-	
+
 	public void updateOccupation() {
 		for(int i = 0; i<64; i++) {
 			board.getTile(i%8, i/8).setOccupied(false);
