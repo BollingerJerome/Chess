@@ -3,17 +3,10 @@ package application.domain.FigureModels;
 
 public class Figure_Pawn extends Figure implements Movement {
 
-
-
-
-
-
 	public Figure_Pawn(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
 	}
 	
-	
-
 
 	public boolean movementOption(int x, int y) {
 		int thisY = this.getY();
@@ -72,9 +65,6 @@ public class Figure_Pawn extends Figure implements Movement {
 			return false;
 		}
 	}
-	
-	
-	
 
 	public boolean canEat(Figure figure, boolean[][] notNeeded) {
 		int thisY = this.getY();

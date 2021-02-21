@@ -12,7 +12,7 @@ public abstract class Figure implements Movement{
 		this.x = x;
 		this.y = y;
 		this.white = white;
-		this.firstMove=false;
+		this.firstMove=true;
 	}
 
 
@@ -27,7 +27,7 @@ public abstract class Figure implements Movement{
 	public void move(int posX, int posY) {
 		this.setX(posX);
 		this.setY(posY);
-		this.firstMove=true;
+		this.firstMove=false;
 	}
 	public void imaginedMove(int posX, int posY) {
 		this.setX(posX);
