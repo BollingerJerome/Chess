@@ -49,6 +49,50 @@ public class GameFlowController {
 				this.board.getTile(ix, iy).setYellow(false);
 			}
 		}
+		if(figure instanceof Figure_King) { //rochade
+			if(figure.isFirstMove() ) {  //Kings first move
+				if(figures[0].isFirstMove() && figure.isWhite()) { //left Rook first move and king is white
+					if(!board.getOccupation()[1][0] && !board.getOccupation()[2][0]) { //Fields are empty
+						if(!wouldBeCheck(figure,2,0) && !wouldBeCheck(figure, 1, 0)) { //King wont be checked
+							this.board.getTile(1, 0).setYellow(true);
+						}
+						else {
+							this.board.getTile(1, 0).setYellow(false);
+						}
+					}
+				}
+				else if(figures[7].isFirstMove() && figure.isWhite()) { //right Rook first move and king is white
+					if(!board.getOccupation()[4][0] && !board.getOccupation()[5][0] && !board.getOccupation()[6][0]) { //Fields are empty
+						if(!wouldBeCheck(figure,4,0) && !wouldBeCheck(figure, 5, 0) && !wouldBeCheck(figure, 6, 0)) { //King wont be checked
+							this.board.getTile(6, 0).setYellow(true);
+						}
+						else {
+							this.board.getTile(0, 6).setYellow(false);
+						}
+					}
+				}
+				if(figures[8].isFirstMove() && !figure.isWhite()) { //left Rook first move and king is white
+					if(!board.getOccupation()[7][1] && !board.getOccupation()[7][2]) { //Fields are empty
+						if(!wouldBeCheck(figure,7,2) && !wouldBeCheck(figure, 7, 1)) { //King wont be checked
+							this.board.getTile(7, 1).setYellow(true);
+						}
+						else {
+							this.board.getTile(7, 1).setYellow(false);
+						}
+					}
+				}
+				else if(figures[15].isFirstMove() && figure.isWhite()) { //right Rook first move and king is white
+					if(!board.getOccupation()[7][4] && !board.getOccupation()[7][5] && !board.getOccupation()[7][6]) { //Fields are empty
+						if(!wouldBeCheck(figure,7,4) && !wouldBeCheck(figure, 7, 5) && !wouldBeCheck(figure, 7, 6)) { //King wont be checked
+							this.board.getTile(7, 6).setYellow(true);
+						}
+						else {
+							this.board.getTile(7, 6).setYellow(false);
+						}
+					}
+				}
+			}
+		}
 	}
 	private void showPrey(Figure hunter) {
 		for(Figure victim : this.figures) {
@@ -215,7 +259,6 @@ public class GameFlowController {
 		turnModel.updateOne();
 		eraseTileColor();
 	}
-
 	public boolean availableMoveOption(boolean white) {
 		Tile[][] preTile = board.getTileField();
 		boolean out = false;
@@ -234,7 +277,6 @@ public class GameFlowController {
 		board.setTileField(preTile);
 		return out;
 	}
-
 	public void updateOccupation() {
 		for(int i = 0; i<64; i++) {
 			board.getTile(i%8, i/8).setOccupied(false);
@@ -274,8 +316,6 @@ public class GameFlowController {
 		}
 
 	}
-
-
 	public Figure[] getFigures() {
 		return figures;
 	}

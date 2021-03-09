@@ -18,11 +18,6 @@ public class CheckModel {
 	private Figure_King kingBlack;
 	
 	
-	
-	public void checkIfCheck(boolean white, Figure[] figures, boolean[][] occupation) {
-		
-	}
-	
 	public boolean canEatKing(boolean white, Figure[] figures, boolean[][] occupation) {
 		for (Figure figure: figures) {
 			if(figure.isAlive() && figure.isWhite() != white) {
