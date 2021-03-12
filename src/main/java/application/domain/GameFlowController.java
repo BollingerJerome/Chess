@@ -29,6 +29,7 @@ public class GameFlowController {
 	private Figure_Rook rochadeRook; 
 	private int Xrook_rochade_rook;
 	private int Yrook_rochade_rook;
+	private Figure_Pawn mutator;
 
 	private void showRochade(Figure figure) {
 		if(figure instanceof Figure_King) { //rochade
@@ -239,6 +240,12 @@ public class GameFlowController {
 		//clicked on yellow Tile
 		if(tile.isYellow()) {
 			last.move(tile.getX(), tile.getY());
+			if(last instanceof Figure_Pawn) {
+				Figure_Pawn paw = (Figure_Pawn) last;
+				if(paw.isMutationable()) {
+					this.mutator = paw;
+				}
+			}
 		}
 		//clicked on red tile
 		else if(tile.isRed()) {
@@ -248,6 +255,13 @@ public class GameFlowController {
 						victim.setAlive(false);
 						updateOccupation();
 						last.move(tile.getX(), tile.getY());
+						if(last instanceof Figure_Pawn) {
+							Figure_Pawn paw = (Figure_Pawn) last;
+							if(paw.isMutationable()) {
+								this.mutator = paw;
+							}
+						}
+
 						break;
 					}
 				}
@@ -352,6 +366,12 @@ public class GameFlowController {
 	}
 	public void setTurnModel(TurnModel turnModel) {
 		this.turnModel = turnModel;
+	}
+	public Figure_Pawn getMutator() {
+		return mutator;
+	}
+	public void setMutator(Figure_Pawn mutator) {
+		this.mutator = mutator;
 	}
 
 }

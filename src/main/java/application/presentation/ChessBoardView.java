@@ -126,6 +126,11 @@ public class ChessBoardView {
 		colorBoardTilesToNormal();
 		updateField();
 		updateFigures();
+		if(controller.getDomainController().getGameFlowController().getMutator().isMutationable()) {
+			
+			
+			
+		}
 	}
 	private void updateField() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();

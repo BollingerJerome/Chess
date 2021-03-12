@@ -5,8 +5,9 @@ public class Figure_Pawn extends Figure implements Movement {
 
 	public Figure_Pawn(String name, String id, boolean alive, int x, int y, boolean white) {
 		super(name, id, alive, x, y, white);
+		this.mutationable = false;
 	}
-	
+	private boolean mutationable;
 
 	public boolean movementOption(int x, int y) {
 		int thisY = this.getY();
@@ -85,6 +86,22 @@ public class Figure_Pawn extends Figure implements Movement {
 		return false;
 	}
 	
-	
+	@Override
+	public void move(int posX, int posY) {
+		this.setX(posX);
+		this.setY(posY);
+		this.setFirstMove(false);;
+		if((this.isWhite() && this.getY() == 7) || (!this.isWhite() && this.getY() == 0)) {
+			this.mutationable = true;
+		}
+	}
+
+	public boolean isMutationable() {
+		return mutationable;
+	}
+
+	public void setMutationable(boolean mutationable) {
+		this.mutationable = mutationable;
+	}
 	
 }
