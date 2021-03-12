@@ -26,12 +26,68 @@ public class GameFlowController {
 	private TurnModel turnModel;
 	private CheckModel checkModel;
 	private Figure last;
+	private Figure_Rook rochadeRook; 
+	private int Xrook_rochade_rook;
+	private int Yrook_rochade_rook;
 
-
+	private void showRochade(Figure figure) {
+		if(figure instanceof Figure_King) { //rochade
+			if(figure.isFirstMove() ) {  //Kings first move
+				if(figures[0].isFirstMove() && figure.isWhite()) { //left Rook first move and king is white
+					if(!board.getOccupation()[1][0] && !board.getOccupation()[2][0]) { //Fields are empty
+						if(!wouldBeCheck(figure,2,0) && !wouldBeCheck(figure, 1, 0)) { //King wont be checked
+							this.board.getTile(1, 0).setGreen(true);
+							rochadeRook = (Figure_Rook) figures[0];
+							Xrook_rochade_rook = 2;
+							Yrook_rochade_rook = 0;
+						}
+					}
+				}
+				if(figures[7].isFirstMove() && figure.isWhite()) { //right Rook first move and king is white
+					if(!board.getOccupation()[4][0] && !board.getOccupation()[5][0] && !board.getOccupation()[6][0]) { //Fields are empty
+						if(!wouldBeCheck(figure,4,0) && !wouldBeCheck(figure, 5, 0) && !wouldBeCheck(figure, 6, 0)) { //King wont be checked
+							this.board.getTile(6, 0).setGreen(true);
+							rochadeRook = (Figure_Rook) figures[7];
+							Xrook_rochade_rook = 5;
+							Yrook_rochade_rook = 0;
+						}
+					}
+				}
+				if(figures[8].isFirstMove() && !figure.isWhite()) { //left Rook first move and king is black
+					if(!board.getOccupation()[1][7] && !board.getOccupation()[2][7]) { //Fields are empty
+						if(!wouldBeCheck(figure,1,7) && !wouldBeCheck(figure, 2, 7)) { //King wont be checked
+							this.board.getTile(1, 7).setGreen(true);
+							rochadeRook = (Figure_Rook) figures[8];
+							Xrook_rochade_rook = 2;
+							Yrook_rochade_rook = 7;
+						}
+					}
+				}
+				if(figures[15].isFirstMove() && !figure.isWhite()) { //right Rook first move and king is white
+					if(!board.getOccupation()[4][7] && !board.getOccupation()[5][7] && !board.getOccupation()[6][7]) { //Fields are empty
+						if(!wouldBeCheck(figure,4,7) && !wouldBeCheck(figure, 5, 7) && !wouldBeCheck(figure, 6, 7)) { //King wont be checked
+							this.board.getTile(6, 7).setGreen(true);
+							rochadeRook = (Figure_Rook) figures[15];
+							Xrook_rochade_rook = 5;
+							Yrook_rochade_rook = 7;
+						}
+					}
+				}
+			}
+		}
+		else {
+			this.board.getTile(1, 0).setGreen(false);
+			this.board.getTile(6, 7).setGreen(false);
+			this.board.getTile(6, 0).setGreen(false);
+			this.board.getTile(1, 7).setGreen(false);
+		}
+	}
 	public void psetTilesColor(Figure figure) {
 		updateOccupation();
+		showRochade(figure);
 		showPath(figure);
 		showPrey(figure);
+		
 	}
 	private void showPath(Figure figure) {
 		for(int i = 0; i<64; i++) {
@@ -49,50 +105,7 @@ public class GameFlowController {
 				this.board.getTile(ix, iy).setYellow(false);
 			}
 		}
-		if(figure instanceof Figure_King) { //rochade
-			if(figure.isFirstMove() ) {  //Kings first move
-				if(figures[0].isFirstMove() && figure.isWhite()) { //left Rook first move and king is white
-					if(!board.getOccupation()[1][0] && !board.getOccupation()[2][0]) { //Fields are empty
-						if(!wouldBeCheck(figure,2,0) && !wouldBeCheck(figure, 1, 0)) { //King wont be checked
-							this.board.getTile(1, 0).setYellow(true);
-						}
-						else {
-							this.board.getTile(1, 0).setYellow(false);
-						}
-					}
-				}
-				else if(figures[7].isFirstMove() && figure.isWhite()) { //right Rook first move and king is white
-					if(!board.getOccupation()[4][0] && !board.getOccupation()[5][0] && !board.getOccupation()[6][0]) { //Fields are empty
-						if(!wouldBeCheck(figure,4,0) && !wouldBeCheck(figure, 5, 0) && !wouldBeCheck(figure, 6, 0)) { //King wont be checked
-							this.board.getTile(6, 0).setYellow(true);
-						}
-						else {
-							this.board.getTile(0, 6).setYellow(false);
-						}
-					}
-				}
-				if(figures[8].isFirstMove() && !figure.isWhite()) { //left Rook first move and king is white
-					if(!board.getOccupation()[7][1] && !board.getOccupation()[7][2]) { //Fields are empty
-						if(!wouldBeCheck(figure,7,2) && !wouldBeCheck(figure, 7, 1)) { //King wont be checked
-							this.board.getTile(7, 1).setYellow(true);
-						}
-						else {
-							this.board.getTile(7, 1).setYellow(false);
-						}
-					}
-				}
-				else if(figures[15].isFirstMove() && figure.isWhite()) { //right Rook first move and king is white
-					if(!board.getOccupation()[7][4] && !board.getOccupation()[7][5] && !board.getOccupation()[7][6]) { //Fields are empty
-						if(!wouldBeCheck(figure,7,4) && !wouldBeCheck(figure, 7, 5) && !wouldBeCheck(figure, 7, 6)) { //King wont be checked
-							this.board.getTile(7, 6).setYellow(true);
-						}
-						else {
-							this.board.getTile(7, 6).setYellow(false);
-						}
-					}
-				}
-			}
-		}
+		
 	}
 	private void showPrey(Figure hunter) {
 		for(Figure victim : this.figures) {
@@ -123,6 +136,7 @@ public class GameFlowController {
 			for(int j = 0; j<8; j++) {
 				board.getTile(i, j).setRed(false);
 				board.getTile(i, j).setYellow(false);
+				board.getTile(i, j).setGreen(false);
 			}
 		}
 	}
@@ -238,6 +252,10 @@ public class GameFlowController {
 					}
 				}
 			}
+		}
+		else if(tile.isGreen()) {
+			last.move(tile.getX(), tile.getY());
+			rochadeRook.move(Xrook_rochade_rook, Yrook_rochade_rook);
 		}
 		//clicked on every other tile, stop wait for another input
 		else {

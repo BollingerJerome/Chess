@@ -11,6 +11,7 @@ public class Tile {
 		this.red = false;
 		this.yellow = false;
 		this.violet = false;
+		this.green = false;
 
 	}
 	
@@ -21,6 +22,7 @@ public class Tile {
 	private boolean red;
 	private boolean yellow;
 	private boolean violet;
+	private boolean green;
 	
 	
 	public int getX() {
@@ -70,6 +72,12 @@ public class Tile {
 	}
 	public void setViolet(boolean violet) {
 		this.violet = violet;
+	}
+	public boolean isGreen() {
+		return green;
+	}
+	public void setGreen(boolean green) {
+		this.green = green;
 	}
 
 	
