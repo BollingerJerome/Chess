@@ -41,7 +41,7 @@ public class Figure_Pawn extends Figure implements Movement {
 				if(y-thisY == 1 && x == thisX) {
 					return true;
 				}
-				else if(this.isFirstMove() && y-thisY == 2 && x == thisX) {
+				else if(this.isFirstMove() && y-thisY == 2 && x == thisX && !occupation[x][y-1]) {
 					return true;
 				}
 				else {
@@ -52,7 +52,7 @@ public class Figure_Pawn extends Figure implements Movement {
 				if(thisY-y == 1  && x == thisX) {
 					return true;
 				}
-				else if(this.isFirstMove() && thisY-y == 2 && x == thisX) {
+				else if(this.isFirstMove() && thisY-y == 2 && x == thisX && !occupation[x][y+1]) {
 					return true;
 				}
 				else {
