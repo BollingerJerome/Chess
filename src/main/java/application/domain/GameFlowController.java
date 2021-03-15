@@ -30,6 +30,7 @@ public class GameFlowController {
 	private int Xrook_rochade_rook;
 	private int Yrook_rochade_rook;
 	private Figure_Pawn mutator;
+	private String mutationWish;
 
 	private void showRochade(Figure figure) {
 		if(figure instanceof Figure_King) { //rochade
@@ -372,6 +373,12 @@ public class GameFlowController {
 	}
 	public void setMutator(Figure_Pawn mutator) {
 		this.mutator = mutator;
+	}
+	public String getMutationWish() {
+		return mutationWish;
+	}
+	public void setMutationWish(String mutationWish) {
+		this.mutationWish = mutationWish;
 	}
 
 }

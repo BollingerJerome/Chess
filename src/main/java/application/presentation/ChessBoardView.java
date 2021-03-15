@@ -6,8 +6,10 @@ import application.domain.FigureModels.Figure;
 
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -18,6 +20,7 @@ public class ChessBoardView {
 		this.borderPane = new BorderPane();
 		this.figureClick = getFigureEventHandler();
 		this.tileClick = getTileEventHandler();
+		addChoiceButtons();
 	}
 
 
@@ -27,11 +30,27 @@ public class ChessBoardView {
 	private FigureVisual[] figureVisual;
 	private EventHandler<MouseEvent> figureClick;
 	private EventHandler<MouseEvent> tileClick;
+	private VBox choice;
 
 
 
-
-
+	private void addChoiceButtons() {
+		Button queen = new Button("Queen");
+		queen.setOnAction(e->{controller.getDomainController().getGameFlowController().setMutationWish("queen");});
+		Button rook = new Button("Rook");
+		rook.setOnAction(e->{controller.getDomainController().getGameFlowController().setMutationWish("rook");});
+		Button bishop = new Button("Bishop");
+		bishop.setOnAction(e->{controller.getDomainController().getGameFlowController().setMutationWish("bishop");});
+		Button knight = new Button("Knight");
+		knight.setOnAction(e->{controller.getDomainController().getGameFlowController().setMutationWish("knight");});
+		
+		this.choice = new VBox();
+		choice.getChildren().add(queen);
+		choice.getChildren().add(rook);
+		choice.getChildren().add(bishop);
+		choice.getChildren().add(knight);
+		this.borderPane.setLeft(choice);
+	}
 	private void colorBoardTilesToNormal() {
 		Board board = controller.getDomainController().getGameFlowController().getBoard();
 		Tile[][] tile = board.getTileField();
@@ -127,9 +146,11 @@ public class ChessBoardView {
 		updateField();
 		updateFigures();
 		if(controller.getDomainController().getGameFlowController().getMutator().isMutationable()) {
+			this.borderPane.setRight(choice);
 			
-			
-			
+		}
+		else {
+			this.borderPane.getChildren().remove(choice);
 		}
 	}
 	private void updateField() {
